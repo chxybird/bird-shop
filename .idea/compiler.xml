@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="bird-ware" />
+        <module name="bird-database" />
+        <module name="bird-user" />
+        <module name="bird-order" />
+        <module name="bird-common" />
+        <module name="bird-coupon" />
+        <module name="bird-product" />
+        <module name="bird-db" />
+        <module name="bird-service-api" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="bird-db" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="bird-common" options="-parameters" />
+      <module name="bird-coupon" options="-parameters" />
+      <module name="bird-database" options="-parameters" />
+      <module name="bird-db" options="-parameters" />
+      <module name="bird-order" options="-parameters" />
+      <module name="bird-product" options="-parameters" />
+      <module name="bird-service" options="-parameters" />
+      <module name="bird-service-api" options="-parameters" />
+      <module name="bird-user" options="-parameters" />
+      <module name="bird-ware" options="-parameters" />
+    </option>
+  </component>
+</project>

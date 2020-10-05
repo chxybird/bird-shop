@@ -1,0 +1,18 @@
+server:
+  port: 20100
+
+spring:
+  application:
+    name: bird-product
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.198.132:3306/bird_db_product?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
+
+#MP逻辑删除配置
+mybatis-plus:
+  #控制台输出sql语句
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
