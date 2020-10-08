@@ -7,6 +7,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @Author lipu
  * @Date 2020/9/30 17:00
@@ -15,7 +17,7 @@ import lombok.Data;
 @Data
 @TableName("t_category")
 @ApiModel(value="分类实体类")
-public class Category {
+public class Category implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     @ApiModelProperty(value = "分类id")
     private Long id;

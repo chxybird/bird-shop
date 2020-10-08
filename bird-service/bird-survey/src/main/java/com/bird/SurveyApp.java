@@ -7,14 +7,14 @@ import org.springframework.cache.annotation.EnableCaching;
 
 /**
  * @Author lipu
- * @Date 2020/9/13 16:37
- * @Description 商品微服务启动类
+ * @Date 2020/10/8 11:07
+ * @Description
  */
 @SpringBootApplication
 @MapperScan("com.bird.dao")
 @EnableCaching
-public class ProductApp {
+public class SurveyApp {
     public static void main(String[] args) {
-        SpringApplication.run(ProductApp.class);
+        SpringApplication.run(SurveyApp.class);
     }
 }

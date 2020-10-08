@@ -12,4 +12,14 @@ import java.util.List;
 public interface ICategoryService {
 
     List<Category> findByParentId(Long parentId);
+
+    Category findById(Long id);
+
+    Integer add(Category category);
+
+    Integer update(Category category);
+
+    Integer deleteById(Long id);
+
+    void deleteBatch(List<Category> categoryList);
 }

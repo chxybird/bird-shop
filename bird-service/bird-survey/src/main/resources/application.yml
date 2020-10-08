@@ -1,11 +1,12 @@
 server:
-  port: 20100
+  port: 30000
+
 spring:
   application:
     name: bird-product
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.198.132:3306/bird_db_product?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://192.168.198.132:3306/bird_db_survey?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
     username: root
     password: root
   redis:
@@ -16,15 +17,6 @@ mybatis-plus:
   #控制台输出sql语句
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-#日志配置
-logging:
-  level:
-    root: info
-  pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
-    file: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
-  file:
-    path: F:/log/bird-shop
 
 
 
