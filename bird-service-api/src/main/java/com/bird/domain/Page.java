@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 /**
  * @Author lipu
  * @Date 2020/10/8 19:38
- * @Description 分页V
+ * @Description 分页类
  */
 @Data
 public class Page {
@@ -22,4 +22,8 @@ public class Page {
     @Min(value = 5,message = "每页数据最少不能低于5条")
     @NotNull(message = "每页大小参数不能为空")
     private Integer size;
+
+    @ApiModelProperty(value = "搜索条件")
+    private String key;
+
 }

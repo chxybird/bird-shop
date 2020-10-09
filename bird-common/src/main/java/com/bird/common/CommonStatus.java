@@ -10,7 +10,8 @@ import lombok.Data;
 public enum CommonStatus {
     SUCCESS(200,"成功"),
     ERROR(500,"失败"),
-    VALIDATE_ERROR(400,"非法参数")
+    VALIDATE_ERROR(400,"非法参数"),
+    AMPLE_FLOW(700,"流控限制")
     ;
 
     private Integer status;

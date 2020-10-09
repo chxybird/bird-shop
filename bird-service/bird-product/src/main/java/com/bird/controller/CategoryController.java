@@ -1,5 +1,6 @@
 package com.bird.controller;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.bird.common.CommonResult;
 import com.bird.common.CommonStatus;
 import com.bird.domain.Category;
@@ -11,7 +12,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -36,9 +36,13 @@ public class CategoryController {
      */
     @ApiOperation("根据父id查询分类信息")
     @GetMapping("/findByParentId")
-    public CommonResult<List<Category>> findByParentId(
+    @SentinelResource(
+            value = "categoryFindByParentId",
+            defaultFallback = ""
+    )
+    public CommonResult findByParentId(
             @RequestParam("parentId")
-            @NotBlank(message = "id不能为空")Long parentId) {
+            @NotNull(message = "id不能为空") Long parentId) {
         List<Category> categoryList = categoryService.findByParentId(parentId);
         return new CommonResult<List<Category>>(CommonStatus.SUCCESS, categoryList);
     }
@@ -50,9 +54,13 @@ public class CategoryController {
      */
     @ApiOperation("根据主键查询分类信息")
     @GetMapping("/findById")
-    public CommonResult<Category> findById(
+    @SentinelResource(
+            value = "categoryFindById",
+            defaultFallback = "defaultFallback"
+    )
+    public CommonResult findById(
             @RequestParam("id")
-            @NotBlank(message = "id不能为空")Long id) {
+            @NotNull(message = "id不能为空") Long id) {
         Category category = categoryService.findById(id);
         return new CommonResult<Category>(CommonStatus.SUCCESS, category);
     }
@@ -64,7 +72,11 @@ public class CategoryController {
      */
     @ApiOperation("添加一条分类")
     @PostMapping("/add")
-    public CommonResult<String> add(@RequestBody Category category) {
+    @SentinelResource(
+            value = "categoryAdd",
+            defaultFallback = "defaultFallback"
+    )
+    public CommonResult add(@RequestBody Category category) {
         Integer result = categoryService.add(category);
         if (result != 0) {
             return new CommonResult<String>(CommonStatus.SUCCESS, "分类添加成功");
@@ -81,7 +93,11 @@ public class CategoryController {
      */
     @ApiOperation("更新分类信息")
     @PostMapping("/update")
-    public CommonResult<String> update(@RequestBody Category category) {
+    @SentinelResource(
+            value = "categoryUpdate",
+            defaultFallback = "defaultFallback"
+    )
+    public CommonResult update(@RequestBody Category category) {
         Integer result = categoryService.update(category);
         if (result != 0) {
             return new CommonResult<String>(CommonStatus.SUCCESS, "分类更新成功");
@@ -98,9 +114,13 @@ public class CategoryController {
      */
     @ApiOperation("删除分类信息")
     @DeleteMapping("/deleteById")
-    public CommonResult<String> deleteById(
+    @SentinelResource(
+            value = "categoryDeleteById",
+            defaultFallback = "defaultFallback"
+    )
+    public CommonResult deleteById(
             @RequestParam("id")
-            @NotNull(message = "id不能为空")Long id){
+            @NotNull(message = "id不能为空") Long id) {
         Integer result = categoryService.deleteById(id);
         if (result != 0) {
             return new CommonResult<String>(CommonStatus.SUCCESS, "分类删除成功");
@@ -117,9 +137,23 @@ public class CategoryController {
      */
     @ApiOperation("批量删除分类信息")
     @DeleteMapping("/deleteBatch")
-    public CommonResult<String> deleteBatch(@RequestBody List<Category> categoryList){
+    @SentinelResource(
+            value = "categoryDeleteBatch",
+            defaultFallback = "defaultFallback"
+    )
+    public CommonResult deleteBatch(@RequestBody List<Category> categoryList) {
         categoryService.deleteBatch(categoryList);
-        return new CommonResult<String>(CommonStatus.SUCCESS,"分类批量删除成功");
+        return new CommonResult<String>(CommonStatus.SUCCESS, "分类批量删除成功");
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/9 20:25
+     * @Description 通用降级方法
+     */
+    public CommonResult defaultFallback(Throwable throwable) {
+        log.warn("商品微服务分类模块已被降级处理");
+        return new CommonResult<String>(CommonStatus.AMPLE_FLOW, "服务器正忙");
     }
 
 }

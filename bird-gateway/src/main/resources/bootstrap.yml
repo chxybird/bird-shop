@@ -1,0 +1,14 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        #读取的配置文件的类型
+        file-extension: yml
+        #配置管理中心地址
+        server-addr: 192.168.198.132:8848
+        #配置管理中心具体的组 不配默认DEFAULT_GROUP
+        group: DEFAULT_GROUP
+        #配置管理中心具体的命名空间 不配置默认public
+        namespace: 7fce5def-3efc-4726-9383-cff06158899a
+  application:
+    name: bird-gateway

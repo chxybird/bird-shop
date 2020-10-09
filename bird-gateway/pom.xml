@@ -8,35 +8,11 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <description>微服务集合</description>
-    <modules>
-        <module>bird-product</module>
-        <module>bird-order</module>
-        <module>bird-user</module>
-        <module>bird-ware</module>
-        <module>bird-coupon</module>
-        <module>bird-survey</module>
-    </modules>
-    <packaging>pom</packaging>
 
-    <artifactId>bird-service</artifactId>
+    <artifactId>bird-gateway</artifactId>
+    <description>微服务网关</description>
 
     <dependencies>
-        <dependency>
-            <groupId>com.bird</groupId>
-            <artifactId>bird-common</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.bird</groupId>
-            <artifactId>bird-database</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.bird</groupId>
-            <artifactId>bird-service-api</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
         <!--Nacos服务注册依赖-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
@@ -57,7 +33,20 @@
             <groupId>com.alibaba.csp</groupId>
             <artifactId>sentinel-datasource-nacos</artifactId>
         </dependency>
-
+        <!--网关依赖-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway</artifactId>
+        </dependency>
+        <!--openFeign-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <!--Hystrix-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
     </dependencies>
-
 </project>

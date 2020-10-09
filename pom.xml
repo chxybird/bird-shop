@@ -9,6 +9,7 @@
         <module>bird-common</module>
         <module>bird-database</module>
         <module>bird-service-api</module>
+        <module>bird-gateway</module>
     </modules>
 
     <parent>
