@@ -11,22 +11,22 @@ import java.io.Serializable;
 
 /**
  * @Author lipu
- * @Date 2020/9/30 17:00
- * @Description 分类实体类
+ * @Date 2020/10/10 14:04
+ * @Description 品牌实体类
  */
 @Data
-@TableName("t_category")
+@TableName("t_brand")
 @ApiModel(value="分类实体类")
-public class Category implements Serializable {
+public class Brand implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
-    @ApiModelProperty(value = "分类id")
+    @ApiModelProperty(value = "品牌id")
     private Long id;
-    @ApiModelProperty(value = "分类名")
+    @ApiModelProperty(value = "品牌名")
     private String name;
-    @ApiModelProperty(value = "分类图片地址")
+    @ApiModelProperty(value = "品牌图标")
     private String icon;
-    @ApiModelProperty(value = "父分类id")
-    private Integer parentId;
-    @ApiModelProperty(value = "计量单位")
-    private Integer productUnit;
+    @ApiModelProperty(value = "品牌首字母")
+    private String letter;
+    @ApiModelProperty(value = "排序值")
+    private Integer sort;
 }

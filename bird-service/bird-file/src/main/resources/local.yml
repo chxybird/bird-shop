@@ -1,0 +1,52 @@
+server:
+  port: 40000
+spring:
+  servlet:
+    multipart:
+      #文件上传大小配置 单次最大和总大小
+      max-file-size: 10MB
+      max-request-size: 10MB
+  application:
+    name: bird-file
+  cloud:
+    #nacos配置
+    nacos:
+      discovery:
+        #如果是集群搭建，这里配置成Nginx的地址即可或者填写一个集群下多个nacos地址（类似于Eureka集群配置）
+        server-addr: ${virtual.machine.ip}:8848
+      config:
+        max-retry: 10
+    #sentinel配置
+    sentinel:
+      transport:
+        dashboard: ${virtual.machine.ip}:8858 #sentinel地址
+        port: 8719
+      #Sentinel持久化配置
+      datasource:
+        ds1:
+          nacos:
+            server-addr: ${virtual.machine.ip}:8848
+            dataId: bird-file-config
+            groupId: CONFIG_GROUP
+            data-type: json
+            rule-type: flow
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+#日志配置
+logging:
+  level:
+    root: info
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+  file:
+    path: F:/log/bird-shop
+
+#虚拟机ip地址
+virtual:
+  machine:
+    ip: 192.168.198.132

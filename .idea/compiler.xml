@@ -7,17 +7,18 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="bird-ware" />
         <module name="bird-service-api" />
-        <module name="bird-database" />
         <module name="bird-survey" />
+        <module name="bird-user" />
         <module name="bird-order" />
         <module name="bird-common" />
         <module name="bird-gateway" />
-        <module name="bird-coupon" />
+        <module name="bird-database" />
         <module name="bird-product" />
+        <module name="bird-coupon" />
+        <module name="bird-file" />
         <module name="bird-db" />
-        <module name="bird-ware" />
-        <module name="bird-user" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -30,6 +31,7 @@
       <module name="bird-coupon" options="-parameters" />
       <module name="bird-database" options="-parameters" />
       <module name="bird-db" options="-parameters" />
+      <module name="bird-file" options="-parameters" />
       <module name="bird-gateway" options="-parameters" />
       <module name="bird-order" options="-parameters" />
       <module name="bird-product" options="-parameters" />

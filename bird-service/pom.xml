@@ -16,6 +16,7 @@
         <module>bird-ware</module>
         <module>bird-coupon</module>
         <module>bird-survey</module>
+        <module>bird-file</module>
     </modules>
     <packaging>pom</packaging>
 

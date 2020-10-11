@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * @Author lipu
@@ -12,7 +13,7 @@ import javax.validation.constraints.NotNull;
  * @Description 分页类
  */
 @Data
-public class Page {
+public class Page implements Serializable {
     @ApiModelProperty(value = "当前页码")
     @Min(value = 1,message = "页码不能小于0")
     @NotNull(message = "当前页参数不能为空")

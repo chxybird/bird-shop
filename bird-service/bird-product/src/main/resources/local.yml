@@ -1,0 +1,60 @@
+spring:
+  application:
+    name: bird-product
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${virtual.machine.ip}:3306/bird_db_product?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
+  redis:
+    host: 192.168.198.132
+    port: 6379
+  cloud:
+    #nacos配置
+    nacos:
+      discovery:
+        #如果是集群搭建，这里配置成Nginx的地址即可或者填写一个集群下多个nacos地址（类似于Eureka集群配置）
+        server-addr: ${virtual.machine.ip}:8848
+      config:
+        max-retry: 10
+    #sentinel配置
+    sentinel:
+      transport:
+        dashboard: ${virtual.machine.ip}:8858 #sentinel地址
+        port: 8719
+      #Sentinel持久化配置
+      datasource:
+        ds1:
+          nacos:
+            server-addr: ${virtual.machine.ip}:8848
+            dataId: bird-product-config
+            groupId: CONFIG_GROUP
+            data-type: json
+            rule-type: flow
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+#MP逻辑删除配置
+mybatis-plus:
+  #控制台输出sql语句
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#日志配置
+logging:
+  level:
+    root: info
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+  file:
+    path: F:/log/bird-shop
+
+#虚拟机ip地址
+virtual:
+  machine:
+    ip: 192.168.198.132

@@ -1,0 +1,74 @@
+spring:
+  application:
+    name: bird-gateway
+  cloud:
+    #nacos配置
+    nacos:
+      discovery:
+        #如果是集群搭建，这里配置成Nginx的地址即可或者填写一个集群下多个nacos地址（类似于Eureka集群配置）
+        server-addr: ${virtual.machine.ip}:8848
+      config:
+        max-retry: 10
+    #sentinel配置
+    sentinel:
+      transport:
+        dashboard: ${virtual.machine.ip}:8858 #sentinel地址
+        port: 8719
+      #Sentinel持久化配置
+      datasource:
+        ds1:
+          nacos:
+            server-addr: ${virtual.machine.ip}:8848
+            dataId: bird-gateway-config
+            groupId: CONFIG_GROUP
+            data-type: json
+            rule-type: flow
+
+    #微服务网关配置
+    gateway:
+      #配置从注册中心拉取服务自动配置路由
+      discovery:
+        locator:
+          enabled: true
+      #配置跨域请求
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+      routes:
+        - id: BIRD-PRODUCT #路由配置的唯一标识
+          uri: lb://bird-product #路由配置 lb表示负载均衡 后面表示微服务的名称
+          predicates:
+            - Path=/bird/product/** #路由规则配置 路由断言
+          filters:
+            - StripPrefix=2 #将请求路径的第一个路径去除
+        #微服务网关测试验证
+        - id: GATEWAY-TEST #路由配置的唯一标识
+          uri: https://blog.csdn.net
+          predicates:
+            - Path=/csdn
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+#日志配置
+logging:
+  level:
+    root: info
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+  file:
+    path: F:/log/bird-shop
+
+#虚拟机ip地址
+virtual:
+  machine:
+    ip: 192.168.198.132
