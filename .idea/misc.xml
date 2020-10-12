@@ -11,6 +11,7 @@
       <set>
         <option value="$PROJECT_DIR$/bird-db/pom.xml" />
         <option value="$PROJECT_DIR$/bird-product/pom.xml" />
+        <option value="$PROJECT_DIR$/bird-service-api/pom.xml" />
       </set>
     </option>
   </component>

@@ -1,7 +1,7 @@
 package com.bird.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.bird.domain.Brand;
+import com.bird.entity.Brand;
 import org.springframework.stereotype.Repository;
 
 /**

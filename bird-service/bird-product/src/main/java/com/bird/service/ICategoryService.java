@@ -1,6 +1,6 @@
 package com.bird.service;
 
-import com.bird.domain.Category;
+import com.bird.entity.Category;
 
 import java.util.List;
 

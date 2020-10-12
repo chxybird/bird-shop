@@ -1,7 +1,7 @@
 package com.bird.service;
 
-import com.bird.domain.Brand;
-import com.bird.domain.Page;
+import com.bird.entity.Brand;
+import com.bird.entity.Page;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
 package com.bird.service.impl;
 
 import com.bird.dao.IBrandDao;
-import com.bird.domain.Brand;
-import com.bird.domain.Page;
+import com.bird.entity.Brand;
+import com.bird.entity.Page;
 import com.bird.service.IBrandService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

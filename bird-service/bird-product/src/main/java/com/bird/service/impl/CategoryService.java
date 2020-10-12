@@ -3,7 +3,7 @@ package com.bird.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.bird.dao.ICategoryDao;
-import com.bird.domain.Category;
+import com.bird.entity.Category;
 import com.bird.service.ICategoryService;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;

@@ -1,4 +1,4 @@
-package com.bird.domain;
+package com.bird.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -11,22 +11,22 @@ import java.io.Serializable;
 
 /**
  * @Author lipu
- * @Date 2020/10/10 14:04
- * @Description 品牌实体类
+ * @Date 2020/9/30 17:00
+ * @Description 分类实体类
  */
 @Data
-@TableName("t_brand")
+@TableName("t_category")
 @ApiModel(value="分类实体类")
-public class Brand implements Serializable {
+public class Category implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
-    @ApiModelProperty(value = "品牌id")
+    @ApiModelProperty(value = "分类id")
     private Long id;
-    @ApiModelProperty(value = "品牌名")
+    @ApiModelProperty(value = "分类名")
     private String name;
-    @ApiModelProperty(value = "品牌图标")
+    @ApiModelProperty(value = "分类图片地址")
     private String icon;
-    @ApiModelProperty(value = "品牌首字母")
-    private String letter;
-    @ApiModelProperty(value = "排序值")
-    private Integer sort;
+    @ApiModelProperty(value = "父分类id")
+    private Integer parentId;
+    @ApiModelProperty(value = "计量单位")
+    private Integer productUnit;
 }

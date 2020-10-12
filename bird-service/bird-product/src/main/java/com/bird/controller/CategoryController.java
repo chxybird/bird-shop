@@ -3,7 +3,7 @@ package com.bird.controller;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.bird.common.CommonResult;
 import com.bird.common.CommonStatus;
-import com.bird.domain.Category;
+import com.bird.entity.Category;
 import com.bird.service.ICategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

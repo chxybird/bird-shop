@@ -8,21 +8,21 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="bird-ware" />
-        <module name="bird-service-api" />
+        <module name="bird-database" />
         <module name="bird-survey" />
-        <module name="bird-user" />
         <module name="bird-order" />
         <module name="bird-common" />
         <module name="bird-gateway" />
-        <module name="bird-database" />
-        <module name="bird-product" />
         <module name="bird-coupon" />
-        <module name="bird-file" />
+        <module name="bird-product" />
+        <module name="bird-user" />
         <module name="bird-db" />
+        <module name="bird-file" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="bird-db" target="11" />
+      <module name="bird-service-api" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
