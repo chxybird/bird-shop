@@ -7,6 +7,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MultipartException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -41,10 +42,18 @@ public class CommonExceptionHandler {
         return new CommonResult(CommonStatus.VALIDATE_ERROR,stringBuilder.toString());
     }
 
+    //非法文件上传请求处理
+    @ExceptionHandler(MultipartException.class)
+    public CommonResult<String> CommonHandler(){
+        return new CommonResult<String>(CommonStatus.VALIDATE_ERROR,"参数必须是文件");
+    }
+
     //通用异常处理
 //    @ExceptionHandler(Exception.class)
 //    public CommonResult<String> CommonHandler(){
 //        return new CommonResult<String>(CommonStatus.ERROR,null);
 //    }
+
+
 
 }

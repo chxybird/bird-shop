@@ -50,3 +50,8 @@ logging:
 virtual:
   machine:
     ip: 192.168.198.132
+
+#本地文件上传路径
+local:
+  file:
+    path: F:\Data\images

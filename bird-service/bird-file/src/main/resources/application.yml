@@ -1,2 +1,7 @@
 server:
   port: 40000
+
+#本地文件上传路径
+local:
+  file:
+    path: F:\Data\images
