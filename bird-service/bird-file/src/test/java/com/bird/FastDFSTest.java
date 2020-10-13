@@ -25,7 +25,7 @@ public class FastDFSTest {
      * @Description 获取tracker服务器信息
      */
     @Test
-    public void getTracker() throws IOException {
+    public void getTracker() throws Exception {
         String tracker = FastDFSUtils.getTracker();
         System.out.println(tracker);
     }
