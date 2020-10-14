@@ -1,11 +1,16 @@
 package com.bird.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bird.dao.IBrandDao;
 import com.bird.entity.Brand;
-import com.bird.entity.Page;
+import com.bird.entity.PageVo;
 import com.bird.service.IBrandService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -27,8 +32,17 @@ public class BrandService implements IBrandService {
      * @Description 查询所有品牌信息 分页查询
      */
     @Override
-    public List<Brand> findAll(Page page) {
-        return null;
+    public List<Brand> findAll(PageVo pageVo) {
+        IPage<Brand> brandIPage = new Page<>(pageVo.getPage(), pageVo.getSize());
+        QueryWrapper<Brand> queryWrapper = new QueryWrapper<>();
+        if (!StringUtils.isEmpty(pageVo.getKey())) {
+            queryWrapper.eq("id", pageVo.getKey()).or().like("name", pageVo.getKey())
+                    .or().eq("letter", pageVo.getKey());
+        }
+        queryWrapper.orderByAsc("sort");
+        IPage<Brand> selectPage = brandDao.selectPage(brandIPage, queryWrapper);
+        List<Brand> brandList = selectPage.getRecords();
+        return brandList;
     }
 
     /**
@@ -38,7 +52,7 @@ public class BrandService implements IBrandService {
      */
     @Override
     public Brand findById(Long id) {
-        return null;
+        return brandDao.selectOne(new QueryWrapper<Brand>().eq("id", id));
     }
 
     /**
@@ -48,7 +62,7 @@ public class BrandService implements IBrandService {
      */
     @Override
     public Integer add(Brand brand) {
-        return null;
+        return brandDao.insert(brand);
     }
 
     /**
@@ -58,7 +72,9 @@ public class BrandService implements IBrandService {
      */
     @Override
     public Integer update(Brand brand) {
-        return null;
+        UpdateWrapper<Brand> updateWrapper = new UpdateWrapper<Brand>().eq("id", brand.getId());
+        Integer result = brandDao.update(brand, updateWrapper);
+        return result;
     }
 
     /**
@@ -68,7 +84,7 @@ public class BrandService implements IBrandService {
      */
     @Override
     public Integer deleteById(Long id) {
-        return null;
+        return brandDao.deleteById(id);
     }
 
     /**
@@ -78,6 +94,8 @@ public class BrandService implements IBrandService {
      */
     @Override
     public void deleteBatch(List<Brand> brandList) {
-
+        for (Brand brand : brandList) {
+            brandDao.deleteById(brand.getId());
+        }
     }
 }

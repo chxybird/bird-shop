@@ -67,6 +67,27 @@ feign:
   hystrix:
     enabled: false
 
+#Hystrix配置
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true #设置是否开启超时 默认true
+        isolation:
+          strategy: THREAD #设置隔离方式为线程隔离
+          thread:
+            timeoutInMilliseconds: 8000 #Hystrix的超时时间 默认1000 1s
+      #下面配置表示10秒内如果失败的请求次数/8>50%那么开启服务熔断
+      circuitBreaker:
+        enabled: true
+        requestVolumeThreshold: 20 #请求次数 默认20
+        sleepWindowInMilliseconds: 5 # 时间窗口 默认5秒
+        errorThresholdPercentage: 50 #失败率 默认50
+  threadpool:
+    default:
+      coreSize: 50 #配置线程池大小, 默认值10个
+
 #虚拟机ip地址
 virtual:
   machine:

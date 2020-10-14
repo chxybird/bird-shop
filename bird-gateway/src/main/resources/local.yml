@@ -47,6 +47,7 @@ spring:
             - Path=/bird/product/** #路由规则配置 路由断言
           filters:
             - StripPrefix=2 #将请求路径的第一个路径去除
+
         #微服务网关测试验证
         - id: GATEWAY-TEST #路由配置的唯一标识
           uri: https://blog.csdn.net

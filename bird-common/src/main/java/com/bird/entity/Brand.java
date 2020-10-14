@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 /**
@@ -16,7 +17,7 @@ import java.io.Serializable;
  */
 @Data
 @TableName("t_brand")
-@ApiModel(value="分类实体类")
+@ApiModel(value="品牌实体类")
 public class Brand implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     @ApiModelProperty(value = "品牌id")

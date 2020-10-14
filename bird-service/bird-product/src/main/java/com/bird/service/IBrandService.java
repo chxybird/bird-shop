@@ -1,7 +1,7 @@
 package com.bird.service;
 
 import com.bird.entity.Brand;
-import com.bird.entity.Page;
+import com.bird.entity.PageVo;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface IBrandService {
 
-    List<Brand> findAll(Page page);
+    List<Brand> findAll(PageVo pageVo);
 
     Brand findById(Long id);
 
