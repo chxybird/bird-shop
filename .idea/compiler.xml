@@ -8,8 +8,8 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="bird-ware" />
-        <module name="bird-user" />
         <module name="bird-survey" />
+        <module name="bird-user" />
         <module name="bird-order" />
         <module name="bird-common" />
         <module name="bird-gateway" />

@@ -1,6 +1,6 @@
 spring:
   application:
-    name: bird-product
+    name: bird-order
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${virtual.machine.ip}:3306/bird_db_product?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
@@ -27,7 +27,7 @@ spring:
         ds1:
           nacos:
             server-addr: ${virtual.machine.ip}:8848
-            dataId: bird-product-config
+            dataId: bird-order-config
             groupId: CONFIG_GROUP
             data-type: json
             rule-type: flow

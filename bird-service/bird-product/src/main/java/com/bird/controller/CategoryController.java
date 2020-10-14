@@ -8,6 +8,7 @@ import com.bird.service.ICategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,19 @@ import java.util.List;
 public class CategoryController {
     @Resource
     private ICategoryService categoryService;
+    @Value("${server.port}")
+    private Integer port;
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/14 9:45
+     * @Description Feign和Ribbon的测试接口
+     */
+    @GetMapping("/find")
+    @ApiOperation("远程调用测试接口")
+    public CommonResult find() {
+        return new CommonResult<Integer>(CommonStatus.SUCCESS, port);
+    }
 
     /**
      * @Author lipu
@@ -38,7 +52,7 @@ public class CategoryController {
     @GetMapping("/findByParentId")
     @SentinelResource(
             value = "categoryFindByParentId",
-            defaultFallback = ""
+            defaultFallback = "defaultFallback"
     )
     public CommonResult findByParentId(
             @RequestParam("parentId")

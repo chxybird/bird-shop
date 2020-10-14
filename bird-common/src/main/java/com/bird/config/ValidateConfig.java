@@ -14,7 +14,7 @@ import javax.validation.ValidatorFactory;
  * @Description 参数校验配置类
  */
 @Configuration
-public class validateConfig {
+public class ValidateConfig {
     //快速失败模式
     @Bean
     public Validator validator(){

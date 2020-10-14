@@ -1,5 +1,6 @@
 package com.bird.common;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
@@ -19,21 +20,25 @@ import java.util.Set;
  * @Description 通用异常处理
  */
 @RestControllerAdvice
+@Slf4j
 public class CommonExceptionHandler {
     //参数校验统一异常处理
     @ExceptionHandler(BindException.class)
     public CommonResult<String> BindHandler(BindException e) {
+        log.warn("BindException");
         String defaultMessage = e.getAllErrors().get(0).getDefaultMessage();
         return new CommonResult(CommonStatus.VALIDATE_ERROR,defaultMessage);
     }
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public CommonResult<String> MethodArgumentNotValidHandler(MethodArgumentNotValidException e){
+        log.warn("MethodArgumentNotValidException");
         FieldError fieldError = e.getBindingResult().getFieldError();
         String defaultMessage = fieldError.getDefaultMessage();
         return new CommonResult(CommonStatus.VALIDATE_ERROR,defaultMessage);
     }
     @ExceptionHandler(ConstraintViolationException.class)
     public CommonResult<String> ConstraintViolationHandler(ConstraintViolationException e){
+        log.warn("ConstraintViolationException");
         Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
         StringBuilder stringBuilder=new StringBuilder();
         for (ConstraintViolation constraintViolation:constraintViolations) {
@@ -47,13 +52,5 @@ public class CommonExceptionHandler {
     public CommonResult<String> CommonHandler(){
         return new CommonResult<String>(CommonStatus.VALIDATE_ERROR,"参数必须是文件");
     }
-
-    //通用异常处理
-//    @ExceptionHandler(Exception.class)
-//    public CommonResult<String> CommonHandler(){
-//        return new CommonResult<String>(CommonStatus.ERROR,null);
-//    }
-
-
 
 }
