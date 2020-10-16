@@ -3,8 +3,10 @@ package com.bird.controller;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.bird.common.CommonResult;
 import com.bird.common.CommonStatus;
-import com.bird.entity.Category;
+import com.bird.entity.PageVo;
+import com.bird.entity.product.Category;
 import com.bird.service.ICategoryService;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +25,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/category")
-@Api(tags = "分类管理")
+@Api(tags = "分类模块接口")
 @Slf4j
 @Validated
 public class CategoryController {

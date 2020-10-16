@@ -1,7 +1,6 @@
 package com.bird.service;
 
 import com.bird.common.CommonResult;
-import com.bird.entity.FastDFSFile;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;

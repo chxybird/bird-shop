@@ -2,14 +2,21 @@ package com.bird.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.bird.dao.IBrandCategoryDao;
 import com.bird.dao.ICategoryDao;
-import com.bird.entity.Category;
+import com.bird.entity.PageVo;
+import com.bird.entity.product.Brand;
+import com.bird.entity.product.Category;
+import com.bird.entity.product.relation.BrandCategory;
 import com.bird.service.ICategoryService;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -27,6 +34,8 @@ public class CategoryService implements ICategoryService {
 
     @Resource
     private ICategoryDao categoryDao;
+    @Resource
+    private IBrandCategoryDao brandCategoryDao;
 
     /**
      * @Author lipu

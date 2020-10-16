@@ -1,6 +1,8 @@
 package com.bird.service;
 
-import com.bird.entity.Category;
+import com.bird.entity.PageVo;
+import com.bird.entity.product.Category;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -22,4 +24,5 @@ public interface ICategoryService {
     Integer deleteById(Long id);
 
     void deleteBatch(List<Category> categoryList);
+
 }

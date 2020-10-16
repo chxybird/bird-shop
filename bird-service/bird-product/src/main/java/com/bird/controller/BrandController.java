@@ -2,8 +2,10 @@ package com.bird.controller;
 
 import com.bird.common.CommonResult;
 import com.bird.common.CommonStatus;
-import com.bird.entity.Brand;
+import com.bird.entity.product.Brand;
 import com.bird.entity.PageVo;
+import com.bird.entity.product.Category;
+import com.bird.entity.product.relation.BrandCategory;
 import com.bird.service.IBrandService;
 import com.netflix.hystrix.contrib.javanica.annotation.DefaultProperties;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
@@ -24,7 +26,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/brand")
-@Api(tags = "品牌管理")
+@Api(tags = "品牌模块接口")
 @Slf4j
 @Validated
 @DefaultProperties(defaultFallback = "hystrixFallback")
@@ -123,6 +125,54 @@ public class BrandController {
         brandService.deleteBatch(brandList);
         return new CommonResult<String>(CommonStatus.SUCCESS, "批量删除品牌成功");
     }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/15 14:03
+     * @Description 查询品牌关联的所有分类信息
+     */
+    @GetMapping("/findCategory")
+    @ApiOperation("根据品牌id查询分类信息")
+    @HystrixCommand
+    public CommonResult findCategory(@RequestParam("brandId") Long brandId){
+        List<Category> categoryList = brandService.findCategory(brandId);
+        return new CommonResult<List<Category>>(CommonStatus.SUCCESS,categoryList);
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/16 9:26
+     * @Description 新增品牌分类关联
+     */
+    @PostMapping("/addToCategory")
+    @ApiOperation("新增品牌分类关联")
+    @HystrixCommand
+    public CommonResult addToCategory(@RequestBody BrandCategory brandCategory){
+        Integer result = brandService.addToCategory(brandCategory);
+        if (result > 0) {
+            return new CommonResult<String>(CommonStatus.SUCCESS, "关联成功");
+        } else {
+            return new CommonResult<String>(CommonStatus.ERROR, "关联失败");
+        }
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/16 9:48
+     * @Description 移除品牌分类关联
+     */
+    @DeleteMapping("/removeCategory")
+    @ApiOperation("移除品牌分类关联")
+    @HystrixCommand
+    public CommonResult removeCategory(BrandCategory brandCategory){
+        Integer result = brandService.removeCategory(brandCategory);
+        if (result > 0) {
+            return new CommonResult<String>(CommonStatus.SUCCESS, "移除成功");
+        } else {
+            return new CommonResult<String>(CommonStatus.ERROR, "移除失败");
+        }
+    }
+
 
     /**
      * @Author lipu

@@ -15,7 +15,7 @@ public class RibbonConfig {
 
     /**
      * Ribbon有7种负载均衡策略
-     * 1.RoundRobinRule 轮询策略  依次选择
+     * 1.RoundRobinRule 轮询策略  依次选择 默认负载均衡算法
      * 2.RandomRule     随机策略  随机选择
      * 3.AvailabilityFilteringRule 可用过滤策略 先过滤掉断路状态和并发量超过阈值的服务，然后轮询
      * 4.WeightedResponseTimeRule 响应时间加权策略 根据平均响应时间计算权重，然后权重越大被选择概率越大。

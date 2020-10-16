@@ -1,4 +1,4 @@
-package com.bird.entity;
+package com.bird.entity.product;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

@@ -1,11 +1,10 @@
 package com.bird.utils;
 
-import com.bird.entity.FastDFSFile;
+import com.bird.entity.file.FastDFSFile;
 import org.csource.fastdfs.*;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
 /**

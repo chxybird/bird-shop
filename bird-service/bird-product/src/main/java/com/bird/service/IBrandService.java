@@ -1,7 +1,9 @@
 package com.bird.service;
 
-import com.bird.entity.Brand;
+import com.bird.entity.product.Brand;
 import com.bird.entity.PageVo;
+import com.bird.entity.product.Category;
+import com.bird.entity.product.relation.BrandCategory;
 
 import java.util.List;
 
@@ -23,5 +25,11 @@ public interface IBrandService {
     Integer deleteById(Long id);
 
     void deleteBatch(List<Brand> brandList);
+
+    Integer addToCategory(BrandCategory brandCategory);
+
+    List<Category> findCategory(Long brandId);
+
+    Integer removeCategory(BrandCategory brandCategory);
 
 }

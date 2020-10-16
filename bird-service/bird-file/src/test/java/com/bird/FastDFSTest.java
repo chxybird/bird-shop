@@ -1,6 +1,5 @@
 package com.bird;
 
-import com.bird.entity.FastDFSFile;
 import com.bird.utils.FastDFSUtils;
 import org.csource.fastdfs.*;
 import org.junit.Test;
@@ -8,8 +7,6 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.io.*;
 
 /**
  * @Author lipu

@@ -2,7 +2,7 @@ package com.bird.service.impl;
 
 import com.bird.common.CommonResult;
 import com.bird.common.CommonStatus;
-import com.bird.entity.FastDFSFile;
+import com.bird.entity.file.FastDFSFile;
 import com.bird.service.IFastDFSService;
 import com.bird.utils.FastDFSUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
-import java.net.Socket;
 
 /**
  * @Author lipu
