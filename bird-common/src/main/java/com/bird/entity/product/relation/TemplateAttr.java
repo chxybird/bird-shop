@@ -9,18 +9,19 @@ import lombok.Data;
 
 /**
  * @Author lipu
- * @Date 2020/10/15 14:33
+ * @Date 2020/10/20 10:07
  * @Description
  */
 @Data
-@TableName("t_brand_category")
-@ApiModel(value="品牌分类关联实体类")
-public class BrandCategory {
+@TableName("t_template_attr")
+@ApiModel(value="模板属性关联实体类")
+public class TemplateAttr {
     @TableId(value = "id", type = IdType.AUTO)
     @ApiModelProperty(value = "主键id")
     private Long id;
-    @ApiModelProperty(value = "外键 品牌id")
-    private Long brandId;
-    @ApiModelProperty(value = "外键 分类id")
-    private Long categoryId;
+    @ApiModelProperty(value = "外键 模板id")
+    private Long templateId;
+    @ApiModelProperty(value = "外键 属性id")
+    private Long attrId;
+
 }

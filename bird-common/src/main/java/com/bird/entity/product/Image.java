@@ -1,4 +1,4 @@
-package com.bird.entity.product.relation;
+package com.bird.entity.product;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -9,18 +9,18 @@ import lombok.Data;
 
 /**
  * @Author lipu
- * @Date 2020/10/15 14:33
+ * @Date 2020/10/20 9:58
  * @Description
  */
 @Data
-@TableName("t_brand_category")
-@ApiModel(value="品牌分类关联实体类")
-public class BrandCategory {
+@TableName("t_attr")
+@ApiModel(value="图片实体类")
+public class Image {
     @TableId(value = "id", type = IdType.AUTO)
     @ApiModelProperty(value = "主键id")
     private Long id;
-    @ApiModelProperty(value = "外键 品牌id")
-    private Long brandId;
-    @ApiModelProperty(value = "外键 分类id")
-    private Long categoryId;
+    @ApiModelProperty(value = "图片地址")
+    private String img;
+    @ApiModelProperty(value = "所属商品id")
+    private Long skuId;
 }

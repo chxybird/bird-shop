@@ -19,8 +19,8 @@ public class CategoryTemplate {
     @TableId(value = "id", type = IdType.AUTO)
     @ApiModelProperty(value = "主键id")
     private Long id;
-    @ApiModelProperty(value = "外键categoryId")
+    @ApiModelProperty(value = "外键 分类id")
     private Long categoryId;
-    @ApiModelProperty(value = "外键templateId")
+    @ApiModelProperty(value = "外键 模板id")
     private Long templateId;
 }

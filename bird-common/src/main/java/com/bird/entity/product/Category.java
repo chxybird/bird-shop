@@ -19,7 +19,7 @@ import java.io.Serializable;
 @ApiModel(value="分类实体类")
 public class Category implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
-    @ApiModelProperty(value = "分类id")
+    @ApiModelProperty(value = "主键id")
     private Long id;
     @ApiModelProperty(value = "分类名")
     private String name;

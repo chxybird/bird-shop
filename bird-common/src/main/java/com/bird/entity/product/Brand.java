@@ -20,7 +20,7 @@ import java.io.Serializable;
 @ApiModel(value="品牌实体类")
 public class Brand implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
-    @ApiModelProperty(value = "品牌id")
+    @ApiModelProperty(value = "主键id")
     private Long id;
     @ApiModelProperty(value = "品牌名")
     private String name;

@@ -17,7 +17,7 @@ import java.util.Date;
 @ApiModel(value="抽象商品实体类")
 public class Spu {
     @TableId(value = "id", type = IdType.AUTO)
-    @ApiModelProperty(value = "抽象商品id")
+    @ApiModelProperty(value = "主键id")
     private Long id;
     @ApiModelProperty(value = "抽象商品名")
     private String name;

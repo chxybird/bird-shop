@@ -1,4 +1,4 @@
-package com.bird.entity;
+package com.bird.entity.order;
 
 import lombok.Data;
 

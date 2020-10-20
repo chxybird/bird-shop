@@ -17,7 +17,7 @@ import lombok.Data;
 @ApiModel(value="模板实体类")
 public class Template {
     @TableId(value = "id", type = IdType.AUTO)
-    @ApiModelProperty(value = "模板id")
+    @ApiModelProperty(value = "主键id")
     private Long id;
     @ApiModelProperty(value = "模板名")
     private String name;
