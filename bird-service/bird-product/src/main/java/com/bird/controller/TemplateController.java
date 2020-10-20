@@ -35,10 +35,10 @@ public class TemplateController {
      * @Date 2020/10/15 9:42
      * @Description 根据分类查询模板信息
      */
-    @GetMapping("/findByCategoryId/{categoryId}")
+    @GetMapping("/findByCategoryId")
     @ApiOperation("根据分类查询模板信息")
-    public CommonResult findByCategoryId(PageVo pageVo,@PathVariable("categoryId") Long categoryId){
-        List<Template> templateList = templateService.findByCategoryId(pageVo, categoryId);
+    public CommonResult findByCategoryId(@RequestParam("categoryId") Long categoryId){
+        List<Template> templateList = templateService.findByCategoryId(categoryId);
         return new CommonResult<List<Template>>(CommonStatus.SUCCESS,templateList);
     }
 

@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface ITemplateService {
 
-    List<Template> findByCategoryId(PageVo pageVo, Long categoryId);
+    List<Template> findByCategoryId(Long categoryId);
 
     Integer add(Template template);
 

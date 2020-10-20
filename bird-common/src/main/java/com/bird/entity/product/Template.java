@@ -27,6 +27,4 @@ public class Template {
     private String description;
     @ApiModelProperty(value = "排序值")
     private Integer sort;
-    @ApiModelProperty(value = "所属分类id")
-    private Long categoryId;
 }
