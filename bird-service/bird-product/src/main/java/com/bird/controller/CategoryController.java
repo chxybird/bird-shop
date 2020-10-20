@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -160,6 +161,30 @@ public class CategoryController {
     public CommonResult deleteBatch(@RequestBody List<Category> categoryList) {
         categoryService.deleteBatch(categoryList);
         return new CommonResult<String>(CommonStatus.SUCCESS, "分类批量删除成功");
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/20 20:14
+     * @Description 根据模板id查询关联的分类信息
+     */
+    @ApiOperation("根据模板id查询分类信息")
+    @GetMapping("/findByTemplateId")
+    public CommonResult findByTemplateId(Long templateId,@Valid PageVo pageVo){
+        List<Category> categoryList = categoryService.findByTemplateId(templateId, pageVo);
+        return new CommonResult<List<Category>>(CommonStatus.SUCCESS,categoryList);
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/20 20:41
+     * @Description 根据模板id查询该模板没有关联的分类信息
+     */
+    @ApiOperation("根据模板id查询分类信息")
+    @GetMapping("/findByTemplateIdWithout")
+    public CommonResult findByTemplateIdWithout(@RequestParam("templateId") Long templateId,@RequestParam("parentId") Long parentId){
+        List<Category> categoryList = categoryService.findByTemplateIdWithout(templateId, parentId);
+        return new CommonResult<List<Category>>(CommonStatus.SUCCESS,categoryList);
     }
 
     /**

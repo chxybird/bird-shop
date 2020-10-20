@@ -12,6 +12,7 @@ import com.bird.entity.product.relation.CategoryTemplate;
 import com.bird.service.ITemplateService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -43,7 +44,25 @@ public class TemplateService implements ITemplateService {
         for (CategoryTemplate categoryTemplate: categoryTemplateList) {
             idList.add(categoryTemplate.getTemplateId());
         }
-        List<Template> templateList = templateDao.selectBatchIds(idList);
+        List<Template> templateList = templateDao.selectList(
+                new QueryWrapper<Template>().in("id", idList)
+        );
+        return templateList;
+    }
+    
+    /**
+     * @Author lipu
+     * @Date 2020/10/20 19:43
+     * @Description 查询所有模板信息
+     */
+    @Override
+    public List<Template> findAll(PageVo pageVo) {
+        IPage<Template> templateIPage=new Page<>(pageVo.getPage(),pageVo.getSize());
+        QueryWrapper<Template> queryWrapper=new QueryWrapper<>();
+        if (!StringUtils.isEmpty(pageVo.getKey())){
+            queryWrapper.eq("name",pageVo.getKey());
+        }
+        List<Template> templateList = templateDao.selectPage(templateIPage, queryWrapper).getRecords();
         return templateList;
     }
 
@@ -79,4 +98,16 @@ public class TemplateService implements ITemplateService {
         updateWrapper.eq("id",template.getId());
         return templateDao.update(template,updateWrapper);
     }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/20 19:50
+     * @Description 新增属性关联
+     */
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/20 19:50
+     * @Description 新增
+     */
 }

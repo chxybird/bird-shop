@@ -14,6 +14,8 @@ public interface ITemplateService {
 
     List<Template> findByCategoryId(Long categoryId);
 
+    List<Template> findAll(PageVo pageVo);
+
     Integer add(Template template);
 
     Integer deleteById(Long id);

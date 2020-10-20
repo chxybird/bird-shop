@@ -6,10 +6,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bird.dao.IBrandCategoryDao;
 import com.bird.dao.ICategoryDao;
+import com.bird.dao.ICategoryTemplateDao;
 import com.bird.entity.PageVo;
 import com.bird.entity.product.Brand;
 import com.bird.entity.product.Category;
 import com.bird.entity.product.relation.BrandCategory;
+import com.bird.entity.product.relation.CategoryTemplate;
 import com.bird.service.ICategoryService;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -36,6 +38,8 @@ public class CategoryService implements ICategoryService {
     private ICategoryDao categoryDao;
     @Resource
     private IBrandCategoryDao brandCategoryDao;
+    @Resource
+    private ICategoryTemplateDao categoryTemplateDao;
 
     /**
      * @Author lipu
@@ -113,4 +117,45 @@ public class CategoryService implements ICategoryService {
         categoryDao.deleteBatchIds(idList);
     }
 
+    /**
+     * @Author lipu
+     * @Date 2020/10/20 19:56
+     * @Description 根据模板id查询关联的分类信息
+     */
+    @Override
+    public List<Category> findByTemplateId(Long templateId, PageVo pageVo) {
+        IPage<Category> categoryIPage=new Page<>(pageVo.getPage(),pageVo.getSize());
+        List<CategoryTemplate> categoryTemplateList = categoryTemplateDao.selectList(
+                new QueryWrapper<CategoryTemplate>().eq("template_id", templateId));
+        List<Long> idList=new ArrayList<>();
+        for (CategoryTemplate categoryTemplate:categoryTemplateList) {
+            idList.add(categoryTemplate.getCategoryId());
+        }
+        QueryWrapper<Category> queryWrapper=new QueryWrapper<>();
+        queryWrapper.in("id",idList);
+        if (!StringUtils.isEmpty(pageVo.getKey())){
+            queryWrapper.and((obj)->{
+                return obj.like("name",pageVo.getKey()).or().eq("id",pageVo.getKey());
+            });
+        }
+        return categoryDao.selectPage(categoryIPage,queryWrapper).getRecords();
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/20 20:31
+     * @Description 根据模板id查询该模板没有关联的分类信息
+     */
+    @Override
+    public List<Category> findByTemplateIdWithout(Long templateId, Long parentId) {
+        List<CategoryTemplate> categoryTemplateList = categoryTemplateDao.selectList(
+                new QueryWrapper<CategoryTemplate>().eq("template_id", templateId));
+        List<Long> idList=new ArrayList<>();
+        for (CategoryTemplate categoryTemplate:categoryTemplateList) {
+            idList.add(categoryTemplate.getCategoryId());
+        }
+        List<Category> categoryList = categoryDao.selectList(
+                new QueryWrapper<Category>().notIn("id", idList).eq("parent_id",parentId));
+        return categoryList;
+    }
 }
