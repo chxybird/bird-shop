@@ -180,7 +180,7 @@ public class CategoryController {
      * @Date 2020/10/20 20:41
      * @Description 根据模板id查询该模板没有关联的分类信息
      */
-    @ApiOperation("根据模板id查询分类信息")
+    @ApiOperation("根据模板id查询分类信息(without)")
     @GetMapping("/findByTemplateIdWithout")
     public CommonResult findByTemplateIdWithout(@RequestParam("templateId") Long templateId,@RequestParam("parentId") Long parentId){
         List<Category> categoryList = categoryService.findByTemplateIdWithout(templateId, parentId);

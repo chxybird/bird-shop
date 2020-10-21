@@ -127,18 +127,21 @@ public class CategoryService implements ICategoryService {
         IPage<Category> categoryIPage=new Page<>(pageVo.getPage(),pageVo.getSize());
         List<CategoryTemplate> categoryTemplateList = categoryTemplateDao.selectList(
                 new QueryWrapper<CategoryTemplate>().eq("template_id", templateId));
-        List<Long> idList=new ArrayList<>();
-        for (CategoryTemplate categoryTemplate:categoryTemplateList) {
-            idList.add(categoryTemplate.getCategoryId());
+        if (categoryTemplateList.size()>0){
+            List<Long> idList=new ArrayList<>();
+            for (CategoryTemplate categoryTemplate:categoryTemplateList) {
+                idList.add(categoryTemplate.getCategoryId());
+            }
+            QueryWrapper<Category> queryWrapper=new QueryWrapper<>();
+            queryWrapper.in("id",idList);
+            if (!StringUtils.isEmpty(pageVo.getKey())){
+                queryWrapper.and((obj)->{
+                    return obj.like("name",pageVo.getKey()).or().eq("id",pageVo.getKey());
+                });
+            }
+            return categoryDao.selectPage(categoryIPage,queryWrapper).getRecords();
         }
-        QueryWrapper<Category> queryWrapper=new QueryWrapper<>();
-        queryWrapper.in("id",idList);
-        if (!StringUtils.isEmpty(pageVo.getKey())){
-            queryWrapper.and((obj)->{
-                return obj.like("name",pageVo.getKey()).or().eq("id",pageVo.getKey());
-            });
-        }
-        return categoryDao.selectPage(categoryIPage,queryWrapper).getRecords();
+        return null;
     }
 
     /**
@@ -150,12 +153,15 @@ public class CategoryService implements ICategoryService {
     public List<Category> findByTemplateIdWithout(Long templateId, Long parentId) {
         List<CategoryTemplate> categoryTemplateList = categoryTemplateDao.selectList(
                 new QueryWrapper<CategoryTemplate>().eq("template_id", templateId));
-        List<Long> idList=new ArrayList<>();
-        for (CategoryTemplate categoryTemplate:categoryTemplateList) {
-            idList.add(categoryTemplate.getCategoryId());
+        if (categoryTemplateList.size()>0){
+            List<Long> idList=new ArrayList<>();
+            for (CategoryTemplate categoryTemplate:categoryTemplateList) {
+                idList.add(categoryTemplate.getCategoryId());
+            }
+            List<Category> categoryList = categoryDao.selectList(
+                    new QueryWrapper<Category>().notIn("id", idList).eq("parent_id",parentId));
+            return categoryList;
         }
-        List<Category> categoryList = categoryDao.selectList(
-                new QueryWrapper<Category>().notIn("id", idList).eq("parent_id",parentId));
-        return categoryList;
+        return null;
     }
 }

@@ -5,10 +5,12 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bird.dao.ICategoryTemplateDao;
+import com.bird.dao.ITemplateAttrDao;
 import com.bird.dao.ITemplateDao;
 import com.bird.entity.PageVo;
 import com.bird.entity.product.Template;
 import com.bird.entity.product.relation.CategoryTemplate;
+import com.bird.entity.product.relation.TemplateAttr;
 import com.bird.service.ITemplateService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +32,8 @@ public class TemplateService implements ITemplateService {
     private ITemplateDao templateDao;
     @Resource
     private ICategoryTemplateDao categoryTemplateDao;
+    @Resource
+    private ITemplateAttrDao templateAttrDao;
     /**
      * @Author lipu
      * @Date 2020/10/15 9:45
@@ -121,6 +125,30 @@ public class TemplateService implements ITemplateService {
         queryWrapper.eq("template_id",categoryTemplate.getTemplateId())
                 .eq("category_id",categoryTemplate.getCategoryId());
         Integer result = categoryTemplateDao.delete(queryWrapper);
+        return result;
+    }
+    /**
+     * @Author lipu
+     * @Date 2020/10/21 21:56
+     * @Description 添加模板属性关联
+     */
+    @Override
+    public Integer addToAttr(TemplateAttr templateAttr) {
+        Integer result = templateAttrDao.insert(templateAttr);
+        return result;
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/21 22:00
+     * @Description 删除模板属性关联
+     */
+    @Override
+    public Integer removeAttr(TemplateAttr templateAttr) {
+        QueryWrapper<TemplateAttr> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("template_id",templateAttr.getTemplateId())
+                .eq("attr_id",templateAttr.getAttrId());
+        Integer result = templateAttrDao.delete(queryWrapper);
         return result;
     }
 }

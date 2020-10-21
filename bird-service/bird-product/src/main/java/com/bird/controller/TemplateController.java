@@ -5,6 +5,7 @@ import com.bird.common.CommonStatus;
 import com.bird.entity.PageVo;
 import com.bird.entity.product.Template;
 import com.bird.entity.product.relation.CategoryTemplate;
+import com.bird.entity.product.relation.TemplateAttr;
 import com.bird.service.ITemplateService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -123,4 +124,35 @@ public class TemplateController {
         }
     }
 
+    /**
+     * @Author lipu
+     * @Date 2020/10/21 21:35
+     * @Description 添加模板属性关联
+     */
+    @PostMapping("/addToAttr")
+    @ApiOperation("添加模板属性关联")
+    public CommonResult addToAttr(@RequestBody TemplateAttr templateAttr){
+        Integer result = templateService.addToAttr(templateAttr);
+        if (result>0){
+            return new CommonResult<String>(CommonStatus.SUCCESS,"添加模板属性关联成功");
+        }else {
+            return new CommonResult<String>(CommonStatus.ERROR,"添加模板属性关联失败");
+        }
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/21 21:35
+     * @Description 删除模板属性关联
+     */
+    @DeleteMapping("/removeAttr")
+    @ApiOperation("删除模板属性关联")
+    public CommonResult removeAttr(TemplateAttr templateAttr){
+        Integer result = templateService.removeAttr(templateAttr);
+        if (result>0){
+            return new CommonResult<String>(CommonStatus.SUCCESS,"移除模板属性关联成功");
+        }else {
+            return new CommonResult<String>(CommonStatus.ERROR,"移除模板属性关联失败");
+        }
+    }
 }
