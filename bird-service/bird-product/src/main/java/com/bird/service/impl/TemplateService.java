@@ -101,13 +101,26 @@ public class TemplateService implements ITemplateService {
 
     /**
      * @Author lipu
-     * @Date 2020/10/20 19:50
-     * @Description 新增属性关联
+     * @Date 2020/10/21 19:55
+     * @Description 添加模板分类关联
      */
+    @Override
+    public Integer addToCategory(CategoryTemplate categoryTemplate) {
+        Integer result = categoryTemplateDao.insert(categoryTemplate);
+        return result;
+    }
 
     /**
      * @Author lipu
-     * @Date 2020/10/20 19:50
-     * @Description 新增
+     * @Date 2020/10/21 19:55
+     * @Description 删除模板分类关联
      */
+    @Override
+    public Integer removeCategory(CategoryTemplate categoryTemplate) {
+        QueryWrapper<CategoryTemplate> queryWrapper=new QueryWrapper();
+        queryWrapper.eq("template_id",categoryTemplate.getTemplateId())
+                .eq("category_id",categoryTemplate.getCategoryId());
+        Integer result = categoryTemplateDao.delete(queryWrapper);
+        return result;
+    }
 }

@@ -4,6 +4,7 @@ import com.bird.common.CommonResult;
 import com.bird.common.CommonStatus;
 import com.bird.entity.PageVo;
 import com.bird.entity.product.Template;
+import com.bird.entity.product.relation.CategoryTemplate;
 import com.bird.service.ITemplateService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -79,12 +80,46 @@ public class TemplateController {
      * @Date 2020/10/15 10:27
      * @Description 更新模板
      */
+    @PostMapping("/update")
+    @ApiOperation("更新模板")
     public CommonResult update(Template template){
         Integer result = templateService.update(template);
         if (result>0){
             return new CommonResult<String>(CommonStatus.SUCCESS,"更新模板成功");
         }else {
             return new CommonResult<String>(CommonStatus.ERROR,"更新模板失败");
+        }
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/21 19:45
+     * @Description 添加模板分类关联
+     */
+    @PostMapping("/addToCategory")
+    @ApiOperation("添加模板分类关联")
+    public CommonResult addToCategory(@RequestBody CategoryTemplate categoryTemplate){
+        Integer result = templateService.addToCategory(categoryTemplate);
+        if (result>0){
+            return new CommonResult<String>(CommonStatus.SUCCESS,"添加模板分类关联成功");
+        }else {
+            return new CommonResult<String>(CommonStatus.ERROR,"添加模板分类关联失败");
+        }
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/21 19:48
+     * @Description 删除模板分类关联
+     */
+    @DeleteMapping("/removeCategory")
+    @ApiOperation("删除模板分类关联")
+    public CommonResult removeCategory(CategoryTemplate categoryTemplate){
+        Integer result = templateService.removeCategory(categoryTemplate);
+        if (result>0){
+            return new CommonResult<String>(CommonStatus.SUCCESS,"移除模板分类关联成功");
+        }else {
+            return new CommonResult<String>(CommonStatus.ERROR,"移除模板分类关联失败");
         }
     }
 
