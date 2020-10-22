@@ -3,6 +3,7 @@ package com.bird.controller;
 import com.bird.common.CommonResult;
 import com.bird.common.CommonStatus;
 import com.bird.entity.PageVo;
+import com.bird.entity.product.Category;
 import com.bird.entity.product.Template;
 import com.bird.entity.product.relation.CategoryTemplate;
 import com.bird.entity.product.relation.TemplateAttr;
@@ -14,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -31,6 +33,18 @@ public class TemplateController {
 
     @Resource
     private ITemplateService templateService;
+    
+    /**
+     * @Author lipu
+     * @Date 2020/10/22 17:49
+     * @Description 查询所有模板信息
+     */
+    @GetMapping("/findAll")
+    @ApiOperation("根据分类查询模板信息")
+    public CommonResult findAll(@Valid PageVo pageVo){
+        List<Template> templateList = templateService.findAll(pageVo);
+        return new CommonResult<List<Template>>(CommonStatus.SUCCESS,templateList);
+    }
 
     /**
      * @Author lipu
@@ -154,5 +168,29 @@ public class TemplateController {
         }else {
             return new CommonResult<String>(CommonStatus.ERROR,"移除模板属性关联失败");
         }
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/22 20:04
+     * @Description 根据属性查询已关联的模板信息
+     */
+    @GetMapping("/findByAttrId")
+    @ApiOperation("根据属性id查询模板信息")
+    public CommonResult findByAttrId(@RequestParam("attrId") Long attrId,@Valid PageVo pageVo){
+        List<Template> templateList = templateService.findByAttrId(attrId,pageVo);
+        return new CommonResult<List<Template>>(CommonStatus.SUCCESS,templateList);
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/22 20:12
+     * @Description  根据属性查询未关联的模板信息
+     */
+    @ApiOperation("根据属性id查询模板信息(without)")
+    @GetMapping("/findByAttrIdWithout")
+    public CommonResult findByAttrIdWithout(@RequestParam("attrId") Long attrId){
+        List<Template> templateList = templateService.findByAttrIdWithout(attrId);
+        return new CommonResult<List<Template>>(CommonStatus.SUCCESS,templateList);
     }
 }

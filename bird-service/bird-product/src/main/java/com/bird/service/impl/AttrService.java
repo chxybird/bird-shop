@@ -68,15 +68,95 @@ public class AttrService implements IAttrService {
         List<TemplateAttr> templateAttrList = templateAttrDao.selectList(
                 new QueryWrapper<TemplateAttr>().eq("template_id", templateId));
         if (templateAttrList.size() > 0) {
-            List<Long> idList=new ArrayList<>();
-            for (TemplateAttr templateAttr:templateAttrList) {
+            List<Long> idList = new ArrayList<>();
+            for (TemplateAttr templateAttr : templateAttrList) {
                 idList.add(templateAttr.getAttrId());
             }
             List<Attr> attrList = attrDao.selectList(new QueryWrapper<Attr>().notIn("id", idList));
             return attrList;
-        }else {
+        } else {
             List<Attr> attrList = attrDao.selectList(null);
             return attrList;
         }
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/22 17:12
+     * @Description 查询所有属性信息 type 1基本属性 2销售属性 0查询所有
+     */
+    @Override
+    public List<Attr> findAll(PageVo pageVo, Integer type) {
+        IPage<Attr> attrIPage = new Page<>(pageVo.getPage(), pageVo.getSize());
+        QueryWrapper<Attr> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(type != 0, "type", type);
+        if (!StringUtils.isEmpty(pageVo.getKey())) {
+            queryWrapper.and((obj -> {
+                return obj.eq("id", pageVo.getKey()).or().like("name", pageVo.getKey());
+            }));
+        }
+        List<Attr> attrList = attrDao.selectPage(attrIPage, queryWrapper).getRecords();
+        return attrList;
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/22 17:44
+     * @Description 添加属性
+     */
+    @Override
+    public void add(Attr attr, List<Long> idList) {
+        attrDao.insert(attr);
+        for (Long id : idList) {
+            TemplateAttr templateAttr = new TemplateAttr();
+            templateAttr.setAttrId(attr.getId());
+            templateAttr.setTemplateId(id);
+            templateAttrDao.insert(templateAttr);
+        }
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/22 19:56
+     * @Description 删除属性信息
+     */
+    @Override
+    public Integer deleteById(Long id) {
+        Integer result = attrDao.deleteById(id);
+        return result;
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/22 20:39
+     * @Description 更新属性信息
+     */
+    @Override
+    public Integer update(Attr attr) {
+        return attrDao.update(attr,new QueryWrapper<Attr>().eq("id",attr.getId()));
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/22 20:48
+     * @Description 添加属性模板关联
+     */
+    @Override
+    public Integer addTemplate(TemplateAttr templateAttr) {
+        return templateAttrDao.insert(templateAttr);
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/22 20:48
+     * @Description 删除属性模板关联
+     */
+    @Override
+    public Integer removeTemplate(TemplateAttr templateAttr) {
+        QueryWrapper<TemplateAttr> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("attr_id",templateAttr.getAttrId())
+                .eq("template_id",templateAttr.getTemplateId());
+        Integer result = templateAttrDao.delete(queryWrapper);
+        return result;
     }
 }

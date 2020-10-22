@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class TemplateService implements ITemplateService {
     private ICategoryTemplateDao categoryTemplateDao;
     @Resource
     private ITemplateAttrDao templateAttrDao;
+
     /**
      * @Author lipu
      * @Date 2020/10/15 9:45
@@ -44,8 +46,8 @@ public class TemplateService implements ITemplateService {
         List<CategoryTemplate> categoryTemplateList = categoryTemplateDao.selectList(
                 new QueryWrapper<CategoryTemplate>().eq("category_id", categoryId)
         );
-        List<Long> idList=new ArrayList<>();
-        for (CategoryTemplate categoryTemplate: categoryTemplateList) {
+        List<Long> idList = new ArrayList<>();
+        for (CategoryTemplate categoryTemplate : categoryTemplateList) {
             idList.add(categoryTemplate.getTemplateId());
         }
         List<Template> templateList = templateDao.selectList(
@@ -53,7 +55,7 @@ public class TemplateService implements ITemplateService {
         );
         return templateList;
     }
-    
+
     /**
      * @Author lipu
      * @Date 2020/10/20 19:43
@@ -61,10 +63,10 @@ public class TemplateService implements ITemplateService {
      */
     @Override
     public List<Template> findAll(PageVo pageVo) {
-        IPage<Template> templateIPage=new Page<>(pageVo.getPage(),pageVo.getSize());
-        QueryWrapper<Template> queryWrapper=new QueryWrapper<>();
-        if (!StringUtils.isEmpty(pageVo.getKey())){
-            queryWrapper.eq("name",pageVo.getKey());
+        IPage<Template> templateIPage = new Page<>(pageVo.getPage(), pageVo.getSize());
+        QueryWrapper<Template> queryWrapper = new QueryWrapper<>();
+        if (!StringUtils.isEmpty(pageVo.getKey())) {
+            queryWrapper.eq("name", pageVo.getKey());
         }
         List<Template> templateList = templateDao.selectPage(templateIPage, queryWrapper).getRecords();
         return templateList;
@@ -76,7 +78,7 @@ public class TemplateService implements ITemplateService {
      * @Description 添加模板
      */
     @Override
-    public Integer add(Template template){
+    public Integer add(Template template) {
         int result = templateDao.insert(template);
         return result;
     }
@@ -98,9 +100,9 @@ public class TemplateService implements ITemplateService {
      */
     @Override
     public Integer update(Template template) {
-        UpdateWrapper<Template> updateWrapper=new UpdateWrapper<>();
-        updateWrapper.eq("id",template.getId());
-        return templateDao.update(template,updateWrapper);
+        UpdateWrapper<Template> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("id", template.getId());
+        return templateDao.update(template, updateWrapper);
     }
 
     /**
@@ -121,12 +123,13 @@ public class TemplateService implements ITemplateService {
      */
     @Override
     public Integer removeCategory(CategoryTemplate categoryTemplate) {
-        QueryWrapper<CategoryTemplate> queryWrapper=new QueryWrapper();
-        queryWrapper.eq("template_id",categoryTemplate.getTemplateId())
-                .eq("category_id",categoryTemplate.getCategoryId());
+        QueryWrapper<CategoryTemplate> queryWrapper = new QueryWrapper();
+        queryWrapper.eq("template_id", categoryTemplate.getTemplateId())
+                .eq("category_id", categoryTemplate.getCategoryId());
         Integer result = categoryTemplateDao.delete(queryWrapper);
         return result;
     }
+
     /**
      * @Author lipu
      * @Date 2020/10/21 21:56
@@ -145,10 +148,60 @@ public class TemplateService implements ITemplateService {
      */
     @Override
     public Integer removeAttr(TemplateAttr templateAttr) {
-        QueryWrapper<TemplateAttr> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("template_id",templateAttr.getTemplateId())
-                .eq("attr_id",templateAttr.getAttrId());
+        QueryWrapper<TemplateAttr> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("template_id", templateAttr.getTemplateId())
+                .eq("attr_id", templateAttr.getAttrId());
         Integer result = templateAttrDao.delete(queryWrapper);
         return result;
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/22 20:16
+     * @Description 根据属性查询已关联的模板信息
+     */
+    @Override
+    public List<Template> findByAttrId(Long attrId, PageVo pageVo) {
+        IPage<Template> templateIPage = new Page<>(pageVo.getPage(),pageVo.getSize());
+        List<TemplateAttr> templateAttrList = templateAttrDao.selectList(
+                new QueryWrapper<TemplateAttr>().eq("attr_id", attrId));
+        if (templateAttrList.size()>0){
+            List<Long> idList=new ArrayList<>();
+            for (TemplateAttr templateAttr:templateAttrList) {
+                idList.add(templateAttr.getTemplateId());
+            }
+            QueryWrapper<Template> queryWrapper=new QueryWrapper<>();
+            queryWrapper.in("id",idList);
+            if (!StringUtils.isEmpty(pageVo.getKey())){
+                queryWrapper.and((obj)->{
+                    return obj.eq("id",pageVo.getKey()).or().like("name",pageVo.getKey());
+                });
+            }
+            List<Template> templateList = templateDao.selectPage(templateIPage, queryWrapper).getRecords();
+            return templateList;
+        }
+        return null;
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/22 20:16
+     * @Description 根据属性查询未关联的模板信息
+     */
+    @Override
+    public List<Template> findByAttrIdWithout(Long attrId) {
+        List<TemplateAttr> templateAttrList = templateAttrDao.selectList(
+                new QueryWrapper<TemplateAttr>().eq("attr_id", attrId));
+        if (templateAttrList.size()>0){
+            List<Long> idList=new ArrayList<>();
+            for (TemplateAttr templateAttr:templateAttrList) {
+                idList.add(templateAttr.getTemplateId());
+            }
+            QueryWrapper<Template> queryWrapper=new QueryWrapper<>();
+            queryWrapper.notIn("id",idList);
+            List<Template> templateList = templateDao.selectList(queryWrapper);
+            return templateList;
+        }
+        return templateDao.selectList(null);
     }
 }

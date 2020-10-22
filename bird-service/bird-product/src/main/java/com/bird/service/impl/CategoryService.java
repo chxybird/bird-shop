@@ -162,6 +162,7 @@ public class CategoryService implements ICategoryService {
                     new QueryWrapper<Category>().notIn("id", idList).eq("parent_id",parentId));
             return categoryList;
         }
-        return null;
+        //没有关联信息说明查询所有
+        return categoryDao.selectList(null);
     }
 }

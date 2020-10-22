@@ -6,6 +6,7 @@ import com.bird.entity.product.relation.CategoryTemplate;
 import com.bird.entity.product.relation.TemplateAttr;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -32,6 +33,10 @@ public interface ITemplateService {
     Integer addToAttr(TemplateAttr templateAttr);
 
     Integer removeAttr(TemplateAttr templateAttr);
+
+    List<Template> findByAttrId(Long attrId, PageVo pageVo);
+
+    List<Template> findByAttrIdWithout(Long attrId);
 
 
 }
