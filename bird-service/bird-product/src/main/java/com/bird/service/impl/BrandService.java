@@ -148,4 +148,25 @@ public class BrandService implements IBrandService {
         brandCategoryDao.delete(queryWrapper);
         return null;
     }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/23 9:44
+     * @Description 根据分类id查询品牌信息
+     */
+    @Override
+    public List<Brand> findByCategoryId(Long categoryId) {
+        List<BrandCategory> brandCategoryList = brandCategoryDao.selectList(
+                new QueryWrapper<BrandCategory>().eq("category_id", categoryId));
+        if (brandCategoryList.size()>0){
+            List<Long> idList=new ArrayList<>();
+            for (BrandCategory brandCategory:brandCategoryList) {
+                idList.add(brandCategory.getBrandId());
+            }
+            List<Brand> brandList = brandDao.selectBatchIds(idList);
+            return brandList;
+        }else {
+            return null;
+        }
+    }
 }

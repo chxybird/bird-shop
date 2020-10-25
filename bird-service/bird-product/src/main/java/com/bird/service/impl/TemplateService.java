@@ -46,14 +46,18 @@ public class TemplateService implements ITemplateService {
         List<CategoryTemplate> categoryTemplateList = categoryTemplateDao.selectList(
                 new QueryWrapper<CategoryTemplate>().eq("category_id", categoryId)
         );
-        List<Long> idList = new ArrayList<>();
-        for (CategoryTemplate categoryTemplate : categoryTemplateList) {
-            idList.add(categoryTemplate.getTemplateId());
+        if (categoryTemplateList.size() > 0) {
+            List<Long> idList = new ArrayList<>();
+            for (CategoryTemplate categoryTemplate : categoryTemplateList) {
+                idList.add(categoryTemplate.getTemplateId());
+            }
+            List<Template> templateList = templateDao.selectList(
+                    new QueryWrapper<Template>().in("id", idList)
+            );
+            return templateList;
+        } else {
+            return null;
         }
-        List<Template> templateList = templateDao.selectList(
-                new QueryWrapper<Template>().in("id", idList)
-        );
-        return templateList;
     }
 
     /**
@@ -162,19 +166,19 @@ public class TemplateService implements ITemplateService {
      */
     @Override
     public List<Template> findByAttrId(Long attrId, PageVo pageVo) {
-        IPage<Template> templateIPage = new Page<>(pageVo.getPage(),pageVo.getSize());
+        IPage<Template> templateIPage = new Page<>(pageVo.getPage(), pageVo.getSize());
         List<TemplateAttr> templateAttrList = templateAttrDao.selectList(
                 new QueryWrapper<TemplateAttr>().eq("attr_id", attrId));
-        if (templateAttrList.size()>0){
-            List<Long> idList=new ArrayList<>();
-            for (TemplateAttr templateAttr:templateAttrList) {
+        if (templateAttrList.size() > 0) {
+            List<Long> idList = new ArrayList<>();
+            for (TemplateAttr templateAttr : templateAttrList) {
                 idList.add(templateAttr.getTemplateId());
             }
-            QueryWrapper<Template> queryWrapper=new QueryWrapper<>();
-            queryWrapper.in("id",idList);
-            if (!StringUtils.isEmpty(pageVo.getKey())){
-                queryWrapper.and((obj)->{
-                    return obj.eq("id",pageVo.getKey()).or().like("name",pageVo.getKey());
+            QueryWrapper<Template> queryWrapper = new QueryWrapper<>();
+            queryWrapper.in("id", idList);
+            if (!StringUtils.isEmpty(pageVo.getKey())) {
+                queryWrapper.and((obj) -> {
+                    return obj.eq("id", pageVo.getKey()).or().like("name", pageVo.getKey());
                 });
             }
             List<Template> templateList = templateDao.selectPage(templateIPage, queryWrapper).getRecords();
@@ -192,13 +196,13 @@ public class TemplateService implements ITemplateService {
     public List<Template> findByAttrIdWithout(Long attrId) {
         List<TemplateAttr> templateAttrList = templateAttrDao.selectList(
                 new QueryWrapper<TemplateAttr>().eq("attr_id", attrId));
-        if (templateAttrList.size()>0){
-            List<Long> idList=new ArrayList<>();
-            for (TemplateAttr templateAttr:templateAttrList) {
+        if (templateAttrList.size() > 0) {
+            List<Long> idList = new ArrayList<>();
+            for (TemplateAttr templateAttr : templateAttrList) {
                 idList.add(templateAttr.getTemplateId());
             }
-            QueryWrapper<Template> queryWrapper=new QueryWrapper<>();
-            queryWrapper.notIn("id",idList);
+            QueryWrapper<Template> queryWrapper = new QueryWrapper<>();
+            queryWrapper.notIn("id", idList);
             List<Template> templateList = templateDao.selectList(queryWrapper);
             return templateList;
         }

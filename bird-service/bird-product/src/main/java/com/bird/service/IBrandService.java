@@ -4,6 +4,7 @@ import com.bird.entity.product.Brand;
 import com.bird.entity.PageVo;
 import com.bird.entity.product.Category;
 import com.bird.entity.product.relation.BrandCategory;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -31,5 +32,7 @@ public interface IBrandService {
     List<Category> findCategory(Long brandId);
 
     Integer removeCategory(BrandCategory brandCategory);
+
+    List<Brand> findByCategoryId(Long categoryId);
 
 }

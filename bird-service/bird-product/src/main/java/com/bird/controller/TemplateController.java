@@ -193,4 +193,6 @@ public class TemplateController {
         List<Template> templateList = templateService.findByAttrIdWithout(attrId);
         return new CommonResult<List<Template>>(CommonStatus.SUCCESS,templateList);
     }
+
+
 }

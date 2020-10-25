@@ -34,10 +34,10 @@ public class AttrController {
     /**
      * @Author lipu
      * @Date 2020/10/21 20:13
-     * @Description 根据模板id查询属信息
+     * @Description 根据模板id查询属性信息
      */
     @GetMapping("/findByTemplateId")
-    @ApiOperation("根据模板id查询属信息")
+    @ApiOperation("根据模板id查询属性信息")
     public CommonResult findByTemplateId(
             @RequestParam("templateId") Long templateId,
             @Valid PageVo pageVo) {
@@ -57,16 +57,36 @@ public class AttrController {
         return new CommonResult<List<Attr>>(CommonStatus.SUCCESS, attrList);
     }
 
+
     /**
      * @Author lipu
      * @Date 2020/10/22 17:05
-     * @Description 查询所有属性信息 type 1基本属性 2销售属性 0查询所有
+     * @Description (可根据模板id)查询所有属性信息 type 1基本属性 2销售属性 0查询所有
      */
     @GetMapping("/findAll/{type}")
     @ApiOperation("查询所有属性信息 type 1基本属性 2销售属性 0查询所有")
-    public CommonResult findAll(@Valid PageVo pageVo, @PathVariable("type") Integer type) {
+    public CommonResult findAll(
+            @Valid PageVo pageVo,
+            @PathVariable("type") Integer type
+    ) {
         List<Attr> attrList = attrService.findAll(pageVo, type);
         return new CommonResult<List<Attr>>(CommonStatus.SUCCESS, attrList);
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/23 10:48
+     * @Description 根据模板id查询所有属性信息(商品添加使用)
+     */
+    @GetMapping("/findByTemplateId/{type}")
+    @ApiOperation("根据模板id查询所有属性信息 type 1基本属性 2销售属性")
+    public CommonResult findByTemplateIdWithType(
+            @RequestParam("templateId") Long templateId,
+            @PathVariable Long type
+            )
+    {
+        List<Attr> attrList = attrService.findByTemplateIdWithType(templateId, type);
+        return new CommonResult(CommonStatus.SUCCESS,attrList);
     }
 
     /**

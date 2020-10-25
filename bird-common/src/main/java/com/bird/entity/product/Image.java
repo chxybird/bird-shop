@@ -13,7 +13,7 @@ import lombok.Data;
  * @Description
  */
 @Data
-@TableName("t_attr")
+@TableName("t_image")
 @ApiModel(value="图片实体类")
 public class Image {
     @TableId(value = "id", type = IdType.AUTO)

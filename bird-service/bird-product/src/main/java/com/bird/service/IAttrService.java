@@ -31,4 +31,6 @@ public interface IAttrService {
 
     Integer removeTemplate(TemplateAttr templateAttr);
 
+    List<Attr> findByTemplateIdWithType(Long templateId,Long type);
+
 }

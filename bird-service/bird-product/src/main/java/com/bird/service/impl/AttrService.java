@@ -83,7 +83,7 @@ public class AttrService implements IAttrService {
     /**
      * @Author lipu
      * @Date 2020/10/22 17:12
-     * @Description 查询所有属性信息 type 1基本属性 2销售属性 0查询所有
+     * @Description (可根据模板id)查询所有属性信息 type 1基本属性 2销售属性 0查询所有
      */
     @Override
     public List<Attr> findAll(PageVo pageVo, Integer type) {
@@ -133,7 +133,7 @@ public class AttrService implements IAttrService {
      */
     @Override
     public Integer update(Attr attr) {
-        return attrDao.update(attr,new QueryWrapper<Attr>().eq("id",attr.getId()));
+        return attrDao.update(attr, new QueryWrapper<Attr>().eq("id", attr.getId()));
     }
 
     /**
@@ -154,9 +154,31 @@ public class AttrService implements IAttrService {
     @Override
     public Integer removeTemplate(TemplateAttr templateAttr) {
         QueryWrapper<TemplateAttr> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("attr_id",templateAttr.getAttrId())
-                .eq("template_id",templateAttr.getTemplateId());
+        queryWrapper.eq("attr_id", templateAttr.getAttrId())
+                .eq("template_id", templateAttr.getTemplateId());
         Integer result = templateAttrDao.delete(queryWrapper);
         return result;
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/23 10:55
+     * @Description 根据模板id查询所有属性信息(商品添加使用)
+     */
+    @Override
+    public List<Attr> findByTemplateIdWithType(Long templateId, Long type) {
+        List<TemplateAttr> templateAttrList = templateAttrDao.selectList(
+                new QueryWrapper<TemplateAttr>().eq("template_id", templateId));
+        if (templateAttrList.size()>0){
+            List<Long> idList=new ArrayList();
+            for (TemplateAttr templateAttr:templateAttrList) {
+                idList.add(templateAttr.getAttrId());
+            }
+            QueryWrapper<Attr> queryWrapper=new QueryWrapper<>();
+            queryWrapper.eq("type",type).in("id",idList);
+            List<Attr> attrList = attrDao.selectList(queryWrapper);
+            return attrList;
+        }
+        return null;
     }
 }

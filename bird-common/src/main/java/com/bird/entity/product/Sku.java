@@ -1,13 +1,16 @@
 package com.bird.entity.product;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.bird.entity.product.relation.SkuAttrValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * @Author lipu
@@ -35,4 +38,9 @@ public class Sku {
     private Integer saleCount;
     @ApiModelProperty(value = "所属抽象商品类id")
     private Long spuId;
+
+    @TableField(exist = false)
+    private List<SkuAttrValue> skuAttrValueList;
+    @TableField(exist = false)
+    private List<Image> imageList;
 }

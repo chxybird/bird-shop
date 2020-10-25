@@ -173,6 +173,19 @@ public class BrandController {
         }
     }
 
+    /**
+     * @Author lipu
+     * @Date 2020/10/23 9:39
+     * @Description 根据分类id查询关联的品牌信息
+     */
+    @GetMapping("/findByCategoryId")
+    @ApiOperation("根据分类id查询关联的品牌信息")
+    @HystrixCommand
+    public CommonResult findByCategoryId(@RequestParam("categoryId") Long categoryId){
+        List<Brand> brandList = brandService.findByCategoryId(categoryId);
+        return new CommonResult(CommonStatus.SUCCESS,brandList);
+    }
+
 
     /**
      * @Author lipu
