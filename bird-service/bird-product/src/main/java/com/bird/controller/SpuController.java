@@ -5,6 +5,7 @@ import com.bird.common.CommonStatus;
 import com.bird.entity.PageVo;
 import com.bird.entity.product.Spu;
 import com.bird.service.ISpuService;
+import com.bird.utils.Utils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +37,7 @@ public class SpuController {
      * @Description 添加商品
      */
     @PostMapping("/add")
-    @ApiOperation("远程调用测试接口")
+    @ApiOperation("添加商品")
     public CommonResult add(@RequestBody Spu spu){
         spuService.add(spu);
         return new CommonResult(CommonStatus.SUCCESS,"添加成功");
@@ -48,7 +49,7 @@ public class SpuController {
      * @Description 查询所有商品信息
      */
     @GetMapping("/findAll")
-    @ApiOperation("远程调用测试接口")
+    @ApiOperation("查询所有商品信息")
     public CommonResult findAll(@Valid PageVo pageVo){
         List<Spu> spuList = spuService.findAll(pageVo);
         return new CommonResult(CommonStatus.SUCCESS,spuList);
@@ -68,10 +69,32 @@ public class SpuController {
     {
         int parseIntStatus = Integer.parseInt(status);
         Integer result = spuService.putStatus(parseIntStatus, id);
-        if (result>0){
-            return new CommonResult(CommonStatus.SUCCESS,"成功");
-        }else {
-            return new CommonResult(CommonStatus.ERROR,"失败");
-        }
+        return Utils.checkResult(result);
     }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/26 9:13
+     * @Description 更新商品信息
+     */
+    @PostMapping("/update")
+    @ApiOperation("更新商品信息")
+    public CommonResult update(@RequestBody Spu spu){
+        Integer result = spuService.update(spu);
+        return Utils.checkResult(result);
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/26 9:13
+     * @Description 根据id删除商品信息
+     */
+    @PostMapping("/deleteById")
+    @ApiOperation("根据id删除商品信息")
+    public CommonResult deleteById(Long id){
+        Integer result = spuService.deleteById(id);
+        return Utils.checkResult(result);
+    }
+
+
 }

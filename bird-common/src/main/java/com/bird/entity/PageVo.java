@@ -6,6 +6,8 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Author lipu

@@ -2,8 +2,6 @@ package com.bird.entity.product;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.bird.entity.product.relation.SpuAttrValue;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -32,10 +30,8 @@ public class Spu {
     @ApiModelProperty(value = "图片地址")
     private String img;
     @ApiModelProperty(value = "创建时间")
-    @JsonFormat(pattern = "yyyy-MM-dd:HH:mm:ss")
     private Date gmtCreate;
     @ApiModelProperty(value = "更新时间")
-    @JsonFormat(pattern = "yyyy-MM-dd:HH:mm:ss")
     private Date gmtModified;
     @ApiModelProperty(value = "发布状态 0:未发布 1:发布")
     private Integer status;

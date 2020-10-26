@@ -17,4 +17,8 @@ public interface ISpuService {
     List<Spu> findAll(PageVo pageVo);
 
     Integer putStatus(Integer status,Long id);
+
+    Integer update(Spu spu);
+
+    Integer deleteById(Long id);
 }

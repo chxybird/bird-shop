@@ -1,7 +1,6 @@
 package com.bird.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bird.dao.*;
@@ -112,5 +111,27 @@ public class SpuService implements ISpuService {
         spu.setStatus(status);
         Integer result = spuDao.update(spu, queryWrapper);
         return result;
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/26 9:14
+     * @Description 更新商品信息
+     */
+    @Override
+    public Integer update(Spu spu) {
+        QueryWrapper<Spu> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("id",spu.getId());
+        return spuDao.update(spu,queryWrapper);
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/26 9:14
+     * @Description 根据id删除商品信息
+     */
+    @Override
+    public Integer deleteById(Long id) {
+        return spuDao.deleteById(id);
     }
 }

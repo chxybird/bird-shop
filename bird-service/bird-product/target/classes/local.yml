@@ -1,6 +1,9 @@
 spring:
   application:
     name: bird-product
+  #json序列化统一时间格式处理
+  jackson:
+    date-format: yyyy-MM-dd:HH:mm:ss
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${virtual.machine.ip}:3306/bird_db_product?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
