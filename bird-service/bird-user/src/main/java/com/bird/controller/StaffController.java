@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Author lipu
@@ -41,6 +42,18 @@ public class StaffController {
     public CommonResult<Staff> findById(@RequestParam("id") Long id){
         Staff staff = staffService.findById(id);
         return new CommonResult<Staff>(CommonStatus.SUCCESS,staff);
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/27 10:37
+     * @Description 获取用户下拉列表
+     */
+    @GetMapping("/selectList")
+    @ApiOperation("获取用户下拉列表")
+    public CommonResult selectList(){
+        List<Staff> selectList = staffService.selectList();
+        return new CommonResult(CommonStatus.SUCCESS,selectList);
     }
 
 }

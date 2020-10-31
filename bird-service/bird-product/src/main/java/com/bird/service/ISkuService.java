@@ -13,4 +13,8 @@ import java.util.List;
 public interface ISkuService {
 
     List<Sku> findAll(PageVo pageVo);
+
+    List<Sku> selectList();
+
+    Sku findById(Long id);
 }

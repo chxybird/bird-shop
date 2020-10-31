@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiOperation;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -36,8 +35,6 @@ public class Purchase {
     private Date gmtModified;
     @ApiModelProperty(value = "外键 采购人id")
     private Long staffId;
-    @ApiModelProperty(value = "外键 仓库id")
-    private Long wareId;
 
 
     @TableField(exist = false)

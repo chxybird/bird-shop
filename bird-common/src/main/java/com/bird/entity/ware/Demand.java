@@ -30,6 +30,8 @@ public class Demand {
     private Long skuId;
     @ApiModelProperty(value = "外键 仓库id")
     private Long wareId;
+    @ApiModelProperty(value = "描述信息")
+    private String description;
 
     @TableField(exist = false)
     private String statusStr;

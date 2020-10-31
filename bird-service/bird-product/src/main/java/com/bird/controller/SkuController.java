@@ -9,10 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -42,5 +39,29 @@ public class SkuController {
     public CommonResult findAll(PageVo pageVo){
         List<Sku> skuList = skuService.findAll(pageVo);
         return new CommonResult(CommonStatus.SUCCESS,skuList);
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/31 13:10
+     * @Description 获取商品下拉列表
+     */
+    @ApiOperation("获取商品下拉列表")
+    @GetMapping("/selectList")
+    public CommonResult selectList(){
+        List<Sku> skuList = skuService.selectList();
+        return new CommonResult(CommonStatus.SUCCESS,skuList);
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/31 14:52
+     * @Description 根据id获取商品信息
+     */
+    @ApiOperation("查询所有商品信息")
+    @GetMapping("/findById")
+    public CommonResult findById(@RequestParam("id") Long id){
+        Sku sku = skuService.findById(id);
+        return new CommonResult(CommonStatus.SUCCESS,sku);
     }
 }

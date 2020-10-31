@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Author lipu
@@ -29,5 +30,16 @@ public class StaffService implements IStaffService {
     public Staff findById(Long id) {
         Staff staff = staffDao.selectOne(new QueryWrapper<Staff>().eq("id", id));
         return staff;
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/27 10:37
+     * @Description 获取用户下拉列表
+     */
+    @Override
+    public List<Staff> selectList() {
+        List<Staff> selectList = staffDao.selectList(null);
+        return selectList;
     }
 }

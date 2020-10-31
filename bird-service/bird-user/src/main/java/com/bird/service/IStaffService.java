@@ -12,4 +12,6 @@ import java.util.List;
 public interface IStaffService {
 
     Staff findById(Long id);
+
+    List<Staff> selectList();
 }

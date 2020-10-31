@@ -41,4 +41,26 @@ public class SkuService implements ISkuService {
         }
         return skuDao.selectPage(skuIPage,queryWrapper).getRecords();
     }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/31 13:12
+     * @Description 获取商品下拉列表
+     */
+    @Override
+    public List<Sku> selectList() {
+        List<Sku> selectList = skuDao.selectList(null);
+        return selectList;
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/10/31 14:53
+     * @Description 根据id查询商品信息
+     */
+    @Override
+    public Sku findById(Long id) {
+        Sku sku = skuDao.selectOne(new QueryWrapper<Sku>().eq("id", id));
+        return sku;
+    }
 }

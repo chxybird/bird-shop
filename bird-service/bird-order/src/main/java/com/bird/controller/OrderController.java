@@ -35,11 +35,11 @@ public class OrderController {
      */
     @ApiOperation("远程调用测试分类")
     @GetMapping("/findCategory")
-    public CommonResult findCategory(){
+    public String findCategory(){
         //Ribbon测试
-//        CommonResult<Integer> commonResult = restTemplate.getForObject(BIRD_PRODUCT + "/category/find", CommonResult.class);
+        String commonResult = restTemplate.getForObject(BIRD_PRODUCT + "/category/find", String.class);
         //feign测试
-        CommonResult<Integer> commonResult = categoryFeign.find();
+//        CommonResult<Integer> commonResult = categoryFeign.find();
         return commonResult;
     }
 }

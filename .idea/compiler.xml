@@ -15,6 +15,7 @@
         <module name="bird-gateway" />
         <module name="bird-database" />
         <module name="bird-product" />
+        <module name="bird-search" />
         <module name="bird-db" />
         <module name="bird-file" />
         <module name="bird-coupon" />
@@ -35,6 +36,7 @@
       <module name="bird-gateway" options="-parameters" />
       <module name="bird-order" options="-parameters" />
       <module name="bird-product" options="-parameters" />
+      <module name="bird-search" options="-parameters" />
       <module name="bird-service" options="-parameters" />
       <module name="bird-service-api" options="-parameters" />
       <module name="bird-survey" options="-parameters" />

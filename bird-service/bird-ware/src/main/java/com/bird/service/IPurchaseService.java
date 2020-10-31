@@ -3,6 +3,7 @@ package com.bird.service;
 import com.bird.entity.PageVo;
 import com.bird.entity.ware.Purchase;
 import com.github.pagehelper.Page;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -19,6 +20,13 @@ public interface IPurchaseService {
 
     List<Purchase> selectList();
 
-    public void mergePurchase(Purchase purchase);
+    Integer distribute(Long staffId,Long id);
+
+    List<Purchase> findByStaffId(Long staffId);
+
+    void accept(Long id);
+
+    void finish(Purchase purchase);
+
 
 }
