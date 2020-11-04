@@ -3,18 +3,24 @@ package com.bird.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.bird.common.CommonResult;
 import com.bird.dao.*;
 import com.bird.entity.PageVo;
 import com.bird.entity.product.*;
+import com.bird.entity.product.Enum.SpuStatus;
+import com.bird.entity.product.es.SkuModel;
 import com.bird.entity.product.relation.SkuAttrValue;
 import com.bird.entity.product.relation.SpuAttrValue;
+import com.bird.feign.ISkuESFeign;
 import com.bird.service.ISpuService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Author lipu
@@ -38,6 +44,8 @@ public class SpuService implements ISpuService {
     private ICategoryDao categoryDao;
     @Resource
     private IBrandDao brandDao;
+    @Resource
+    private ISkuESFeign skuESFeign;
 
     /**
      * @Author lipu
@@ -61,13 +69,13 @@ public class SpuService implements ISpuService {
             skuDao.insert(sku);
             //添加Sku的图片集信息
             List<Image> imageList = sku.getImageList();
-                for (Image image : imageList) {
-                    image.setSkuId(sku.getId());
-                    imagDao.insert(image);
-                }
+            for (Image image : imageList) {
+                image.setSkuId(sku.getId());
+                imagDao.insert(image);
+            }
             //设置销售属性信息
             List<SkuAttrValue> skuAttrValueList = sku.getSkuAttrValueList();
-            for (SkuAttrValue skuAttrValue:skuAttrValueList) {
+            for (SkuAttrValue skuAttrValue : skuAttrValueList) {
                 skuAttrValue.setSkuId(sku.getId());
                 skuAttrValueDao.insert(skuAttrValue);
             }
@@ -81,11 +89,11 @@ public class SpuService implements ISpuService {
      */
     @Override
     public List<Spu> findAll(PageVo pageVo) {
-        IPage<Spu> spuIPage=new Page<>(pageVo.getPage(),pageVo.getSize());
-        QueryWrapper<Spu> queryWrapper=new QueryWrapper<>();
-        if (!StringUtils.isEmpty(pageVo.getKey())){
-            queryWrapper.and((obj)->{
-                return obj.eq("id",pageVo.getKey()).or().like("name",pageVo.getKey());
+        IPage<Spu> spuIPage = new Page<>(pageVo.getPage(), pageVo.getSize());
+        QueryWrapper<Spu> queryWrapper = new QueryWrapper<>();
+        if (!StringUtils.isEmpty(pageVo.getKey())) {
+            queryWrapper.and((obj) -> {
+                return obj.eq("id", pageVo.getKey()).or().like("name", pageVo.getKey());
             });
         }
         List<Spu> spuList = spuDao.selectPage(spuIPage, queryWrapper).getRecords();
@@ -104,13 +112,51 @@ public class SpuService implements ISpuService {
      * @Description 商品上架下架
      */
     @Override
-    public Integer putStatus(Integer status,Long id) {
-        QueryWrapper<Spu> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("id",id);
-        Spu spu=new Spu();
+    public Integer putStatus(Integer status, Long id) {
+        QueryWrapper<Spu> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id", id);
+        Spu spu = spuDao.selectOne(queryWrapper);
+        Brand brand = brandDao.selectOne(new QueryWrapper<Brand>().eq("id", spu.getBrandId()));
+        spu.setBrandName(brand.getName());
+        Category category = categoryDao.selectOne(new QueryWrapper<Category>().eq("id", spu.getCategoryId()));
+        spu.setCategoryName(category.getName());
         spu.setStatus(status);
+        //修改商品状态
         Integer result = spuDao.update(spu, queryWrapper);
-        return result;
+        List<Sku> skuList = skuDao.selectList(
+                new QueryWrapper<Sku>().eq("spu_id", spu.getId()));
+        //ES数据库同步我使用双写策略
+        if (result > 0) {
+            //判断商品是上架还是下架 上架入ES库下架出ES库
+            //入库
+            if (status == SpuStatus.PUBLISH.getStatus()) {
+                //商品写入es
+                List<SkuModel> skuModelList = new ArrayList<>();
+                skuList.forEach((sku -> {
+                    SkuModel skuModel = new SkuModel();
+                    skuModel.setId(sku.getId());
+                    skuModel.setBrandName(spu.getBrandName());
+                    skuModel.setCategoryName(spu.getCategoryName());
+                    skuModel.setDescription(sku.getDescription());
+                    skuModel.setPrice(sku.getPrice());
+                    skuModel.setName(sku.getName());
+                    skuModel.setTitle(sku.getTitle());
+                    skuModelList.add(skuModel);
+                }));
+                //调用搜索微服务商品信息入库
+                CommonResult<Integer> flag = skuESFeign.saveAll(skuModelList);
+                return flag.getData();
+            } else { //出库
+                List<SkuModel> skuModelList = skuList.stream().map(sku -> {
+                    SkuModel skuModel = new SkuModel();
+                    skuModel.setId(sku.getId());
+                    return skuModel;
+                }).collect(Collectors.toList());
+                return skuESFeign.deleteBatch(skuModelList).getData();
+            }
+        } else {
+            return 0;
+        }
     }
 
     /**
@@ -120,9 +166,9 @@ public class SpuService implements ISpuService {
      */
     @Override
     public Integer update(Spu spu) {
-        QueryWrapper<Spu> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("id",spu.getId());
-        return spuDao.update(spu,queryWrapper);
+        QueryWrapper<Spu> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id", spu.getId());
+        return spuDao.update(spu, queryWrapper);
     }
 
     /**

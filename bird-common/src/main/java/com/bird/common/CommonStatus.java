@@ -23,4 +23,12 @@ public enum CommonStatus {
         this.status = status;
         this.msg = msg;
     }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
 }

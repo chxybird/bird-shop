@@ -96,5 +96,4 @@ public class SpuController {
         return Utils.checkResult(result);
     }
 
-
 }

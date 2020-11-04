@@ -33,7 +33,7 @@ public class Spu {
     private Date gmtCreate;
     @ApiModelProperty(value = "更新时间")
     private Date gmtModified;
-    @ApiModelProperty(value = "发布状态 0:未发布 1:发布")
+    @ApiModelProperty(value = "发布状态 0:未发布(未上架) 1:发布(上架)")
     private Integer status;
     @ApiModelProperty(value = "所属品牌id")
     private Long brandId;
