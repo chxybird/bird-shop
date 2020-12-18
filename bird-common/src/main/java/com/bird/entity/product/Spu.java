@@ -53,7 +53,14 @@ public class Spu {
     private String categoryName;
 
     @TableField(exist = false)
+    private Brand brand;
+    @TableField(exist = false)
+    private Category category;
+
+    @TableField(exist = false)
     private List<SpuAttrValue> spuAttrValueList;
+    @TableField(exist = false)
+    private List<Attr> attrList;
     @TableField(exist = false)
     private List<Sku> skuList;
 

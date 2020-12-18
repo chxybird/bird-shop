@@ -7,7 +7,7 @@ import com.bird.common.CommonResult;
 import com.bird.dao.*;
 import com.bird.entity.PageVo;
 import com.bird.entity.product.*;
-import com.bird.entity.product.Enum.SpuStatus;
+import com.bird.entity.product.status.SpuStatus;
 import com.bird.entity.product.es.SkuModel;
 import com.bird.entity.product.relation.SkuAttrValue;
 import com.bird.entity.product.relation.SpuAttrValue;
@@ -99,7 +99,8 @@ public class SpuService implements ISpuService {
         List<Spu> spuList = spuDao.selectPage(spuIPage, queryWrapper).getRecords();
         spuList.forEach((spu -> {
             Brand brand = brandDao.selectOne(new QueryWrapper<Brand>().eq("id", spu.getBrandId()));
-            Category category = categoryDao.selectOne(new QueryWrapper<Category>().eq("id", spu.getCategoryId()));
+            Category category = categoryDao.selectOne(
+                    new QueryWrapper<Category>().eq("id", spu.getCategoryId()));
             spu.setBrandName(brand.getName());
             spu.setCategoryName(category.getName());
         }));
@@ -133,6 +134,7 @@ public class SpuService implements ISpuService {
                 //商品写入es
                 List<SkuModel> skuModelList = new ArrayList<>();
                 skuList.forEach((sku -> {
+                    //获取每个sku对应的属性以及
                     SkuModel skuModel = new SkuModel();
                     skuModel.setId(sku.getId());
                     skuModel.setBrandName(spu.getBrandName());

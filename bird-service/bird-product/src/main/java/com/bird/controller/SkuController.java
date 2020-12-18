@@ -8,6 +8,7 @@ import com.bird.service.ISkuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,5 +64,18 @@ public class SkuController {
     public CommonResult findById(@RequestParam("id") Long id){
         Sku sku = skuService.findById(id);
         return new CommonResult(CommonStatus.SUCCESS,sku);
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/12/18 13:54
+     * @Description 商品详情
+     */
+    @GetMapping("/details")
+    @ApiOperation("商品详情")
+    public CommonResult details(@RequestParam("id") Long id) throws Exception {
+        System.out.println(Thread.currentThread().getName());
+        Sku sku = skuService.details(id);
+        return new CommonResult<Sku>(CommonStatus.SUCCESS,sku);
     }
 }

@@ -40,7 +40,11 @@ public class Sku {
     private Long spuId;
 
     @TableField(exist = false)
+    private Spu spu;
+    @TableField(exist = false)
     private List<SkuAttrValue> skuAttrValueList;
+    @TableField(exist = false)
+    private List<Attr> attrList;
     @TableField(exist = false)
     private List<Image> imageList;
 }

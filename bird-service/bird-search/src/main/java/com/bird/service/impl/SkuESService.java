@@ -2,8 +2,13 @@ package com.bird.service.impl;
 
 import com.bird.dao.ISkuESDao;
 import com.bird.domain.SkuModel;
+import com.bird.entity.search.SearchParam;
 import com.bird.service.ISkuESService;
+import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
+import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -17,6 +22,8 @@ import java.util.List;
 public class SkuESService implements ISkuESService {
     @Resource
     private ISkuESDao skuESDao;
+    @Resource
+    private ElasticsearchRestTemplate elasticsearchRestTemplate;
 
     /**
      * @Author lipu
@@ -46,5 +53,20 @@ public class SkuESService implements ISkuESService {
         }catch (Exception e){
             return false;
         }
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/11/7 19:52
+     * @Description 商品检索
+     */
+    @Override
+    public Object search(SearchParam searchParam) {
+
+        //检索条件检索
+        if (!StringUtils.isEmpty(searchParam.getKeyword())){
+
+        }
+        return null;
     }
 }

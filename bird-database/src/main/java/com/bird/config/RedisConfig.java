@@ -31,47 +31,28 @@ import java.util.Map;
 @Configuration
 public class RedisConfig {
 
-    //序列化配置
+    /**
+     * @Author lipu
+     * @Date 2020/11/7 18:20
+     * @Description redisTemplate序列化配置
+     */
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(connectionFactory);
-        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
+        Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<Object>(Object.class);
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
         jackson2JsonRedisSerializer.setObjectMapper(objectMapper);
         RedisSerializer redisSerializer = new StringRedisSerializer();
+        //设置key序列化方式
         redisTemplate.setKeySerializer(redisSerializer);
         redisTemplate.setHashKeySerializer(redisSerializer);
+        //设置valiue的序列化方式
         redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
         redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer);
         redisTemplate.afterPropertiesSet();
         return redisTemplate;
-    }
-
-    //SpringCache支持缓存过期时间配置 单位秒
-    @Bean
-    @Primary
-    public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {
-        RedisCacheConfiguration config = instanceConfig(90L);
-        return RedisCacheManager.builder(connectionFactory)
-                .cacheDefaults(config)
-                .transactionAware()
-                .build();
-    }
-    private RedisCacheConfiguration instanceConfig(Long ttl) {
-        Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        objectMapper.configure(MapperFeature.USE_ANNOTATIONS, false);
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        //redis获取数据转换成Object，不然ORM操作会报类型转换异常
-        objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
-        jackson2JsonRedisSerializer.setObjectMapper(objectMapper);
-        return RedisCacheConfiguration.defaultCacheConfig()
-                .entryTtl(Duration.ofSeconds(ttl))
-                .disableCachingNullValues()
-                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(jackson2JsonRedisSerializer));
     }
 }

@@ -1,4 +1,4 @@
-package com.bird.entity.product.Enum;
+package com.bird.entity.product.status;
 
 /**
  * @Author lipu

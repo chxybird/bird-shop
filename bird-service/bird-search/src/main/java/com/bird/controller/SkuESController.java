@@ -3,6 +3,7 @@ package com.bird.controller;
 import com.bird.common.CommonResult;
 import com.bird.common.CommonStatus;
 import com.bird.domain.SkuModel;
+import com.bird.entity.search.SearchParam;
 import com.bird.service.ISkuESService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -60,4 +61,17 @@ public class SkuESController {
             return new CommonResult(CommonStatus.ERROR,CommonStatus.ERROR.getStatus());
         }
     }
+
+    /**
+     * @Author lipu
+     * @Date 2020/11/7 19:34
+     * @Description 商品检索
+     */
+    @GetMapping("/search")
+    @ApiOperation("商品检索")
+    public CommonResult search(SearchParam searchParam){
+        return null;
+    }
+
+
 }

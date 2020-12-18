@@ -38,9 +38,9 @@ public class SpuController {
      */
     @PostMapping("/add")
     @ApiOperation("添加商品")
-    public CommonResult add(@RequestBody Spu spu){
+    public CommonResult add(@RequestBody Spu spu) {
         spuService.add(spu);
-        return new CommonResult(CommonStatus.SUCCESS,"添加成功");
+        return new CommonResult(CommonStatus.SUCCESS, "添加成功");
     }
 
     /**
@@ -50,9 +50,9 @@ public class SpuController {
      */
     @GetMapping("/findAll")
     @ApiOperation("查询所有商品信息")
-    public CommonResult findAll(@Valid PageVo pageVo){
+    public CommonResult findAll(@Valid PageVo pageVo) {
         List<Spu> spuList = spuService.findAll(pageVo);
-        return new CommonResult(CommonStatus.SUCCESS,spuList);
+        return new CommonResult(CommonStatus.SUCCESS, spuList);
     }
 
     /**
@@ -64,9 +64,8 @@ public class SpuController {
     @ApiOperation("商品上架下架")
     public CommonResult putStatus(
             @RequestParam("status")
-            @Pattern(regexp = "^0|1$",message ="状态只能是0下架和1上架" ) String status,
-            @PathVariable Long id)
-    {
+            @Pattern(regexp = "^0|1$", message = "状态只能是0下架和1上架") String status,
+            @PathVariable Long id) {
         int parseIntStatus = Integer.parseInt(status);
         Integer result = spuService.putStatus(parseIntStatus, id);
         return Utils.checkResult(result);
@@ -79,7 +78,7 @@ public class SpuController {
      */
     @PostMapping("/update")
     @ApiOperation("更新商品信息")
-    public CommonResult update(@RequestBody Spu spu){
+    public CommonResult update(@RequestBody Spu spu) {
         Integer result = spuService.update(spu);
         return Utils.checkResult(result);
     }
@@ -91,7 +90,7 @@ public class SpuController {
      */
     @PostMapping("/deleteById")
     @ApiOperation("根据id删除商品信息")
-    public CommonResult deleteById(Long id){
+    public CommonResult deleteById(Long id) {
         Integer result = spuService.deleteById(id);
         return Utils.checkResult(result);
     }

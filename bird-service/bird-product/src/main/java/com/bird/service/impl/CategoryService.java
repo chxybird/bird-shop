@@ -30,7 +30,7 @@ import java.util.List;
  * @Description
  */
 @Service
-@CacheConfig(cacheNames = "category", cacheManager = "cacheManager")
+@CacheConfig(cacheNames = "category")
 @Transactional
 public class CategoryService implements ICategoryService {
 
@@ -49,7 +49,8 @@ public class CategoryService implements ICategoryService {
     @Override
     @Cacheable(key = "'findByParentId'+#parentId")
     public List<Category> findByParentId(Long parentId) {
-        List<Category> categoryList = categoryDao.selectList(new QueryWrapper<Category>().eq("parent_id", parentId));
+        List<Category> categoryList = categoryDao.selectList(
+                new QueryWrapper<Category>().eq("parent_id", parentId));
         return categoryList;
     }
 
@@ -61,7 +62,8 @@ public class CategoryService implements ICategoryService {
     @Override
     @Cacheable(key = "'findById'+#id")
     public Category findById(Long id) {
-        Category category = categoryDao.selectOne(new QueryWrapper<Category>().eq("id", id));
+        Category category = categoryDao.selectOne(
+                new QueryWrapper<Category>().eq("id", id));
         return category;
     }
 
@@ -85,7 +87,8 @@ public class CategoryService implements ICategoryService {
     @Override
     @CacheEvict(value="category", allEntries=true)
     public Integer update(Category category){
-        Integer result = categoryDao.update(category, new UpdateWrapper<Category>().eq("id", category.getId()));
+        Integer result = categoryDao.update(category,
+                new UpdateWrapper<Category>().eq("id", category.getId()));
         return result;
     }
 

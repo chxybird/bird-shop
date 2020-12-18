@@ -25,5 +25,4 @@ public class Attr {
     private Integer type;
     @ApiModelProperty(value = "是否检索 0否 1是")
     private Integer isSearch;
-
 }

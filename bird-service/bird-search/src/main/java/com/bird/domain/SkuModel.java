@@ -35,4 +35,8 @@ public class SkuModel {
     private String brandName;
     @Field(type = FieldType.Keyword,store = true)
     private String categoryName;
+//    @Field(type = FieldType.Long,store = true)
+//    private Long brandId;
+//    @Field(type = FieldType.Long,store = true)
+//    private Long categoryId;
 }

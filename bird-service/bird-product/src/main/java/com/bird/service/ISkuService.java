@@ -4,6 +4,7 @@ import com.bird.entity.PageVo;
 import com.bird.entity.product.Sku;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @Author lipu
@@ -17,4 +18,7 @@ public interface ISkuService {
     List<Sku> selectList();
 
     Sku findById(Long id);
+
+    Sku details(Long id) throws Exception;
+
 }
