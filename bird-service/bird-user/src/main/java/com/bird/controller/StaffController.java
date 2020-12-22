@@ -8,10 +8,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -54,6 +51,16 @@ public class StaffController {
     public CommonResult selectList(){
         List<Staff> selectList = staffService.selectList();
         return new CommonResult(CommonStatus.SUCCESS,selectList);
+    }
+
+    /**
+     * @Author lipu
+     * @Date 2020/12/22 14:24
+     * @Description 发送验证码
+     */
+    @PostMapping("/sendSms")
+    public CommonResult sendSms(){
+        return null;
     }
 
 }

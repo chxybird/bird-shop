@@ -1,2 +1,11 @@
 server:
   port: 45000
+
+#阿里短信配置
+sms:
+  phone: 15212740687
+  path: https://feginesms.market.alicloudapi.com/codeNotice
+  skin: 1
+  sign: 1
+  app-code: d8fe1750787f4031a3d0af118327c436
+

@@ -13,7 +13,10 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class ApplicationContextConfig {
 
-    //远程调用加ribbon负载均衡
+    /**
+     * 远程调用加ribbon负载均衡
+     * @return
+     */
     @Bean
     @LoadBalanced
     public RestTemplate restTemplate(){
