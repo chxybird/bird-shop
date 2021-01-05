@@ -1,4 +1,4 @@
-package com.bird.utils;
+package com.bird.Utils;
 
 import io.jsonwebtoken.*;
 

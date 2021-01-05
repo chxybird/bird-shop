@@ -1,6 +1,8 @@
 package com.bird.service;
 
 import com.bird.entity.user.Staff;
+import com.bird.entity.vo.LoginVo;
+import com.bird.entity.vo.RegisterVo;
 
 import java.util.List;
 
@@ -14,4 +16,8 @@ public interface IStaffService {
     Staff findById(Long id);
 
     List<Staff> selectList();
+
+    Boolean register(RegisterVo registerVo);
+
+    Boolean login(LoginVo loginVo);
 }
