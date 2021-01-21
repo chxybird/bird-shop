@@ -15,7 +15,7 @@ import java.math.BigDecimal;
  * @Description
  */
 @Data
-@TableName("t_cart")
+@TableName("t_cart_item")
 @ApiModel(value="购物项实体类")
 public class CartItem {
     @TableId(value = "id", type = IdType.AUTO)

@@ -1,5 +1,6 @@
 package com.bird.utils;
 
+import com.bird.entity.user.Staff;
 import io.jsonwebtoken.*;
 
 import java.util.*;
@@ -66,4 +67,22 @@ public class JwtUtils {
         info.put("body", body);
         return info;
     }
+
+    /**
+     * @Author lipu
+     * @Date 2021/1/21 17:06
+     * @Description 获取用户认证信息id
+     */
+    public static Long getStaffInfo(String jwt){
+        //令牌解析
+        Jws<Claims> claimsJws = Jwts.parser().setSigningKey(KEY).parseClaimsJws(jwt);
+        Claims body = claimsJws.getBody();
+        Long id = body.get("ID", Long.class);
+        return id;
+//        //获取用户信息
+//        Claims body = (Claims) map.get("body");
+//        Integer userId =(Integer) body.get("ID");
+//        return userId.longValue();
+    }
+
 }

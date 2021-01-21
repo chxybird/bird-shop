@@ -11,4 +11,10 @@ public interface ICartService {
 
     void add(Cart cart);
 
+    Cart findByStaffId(Long staffId);
+
+    Boolean init(Long staffId);
+
+    void delete(Long staffId);
+
 }

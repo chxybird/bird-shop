@@ -6,6 +6,7 @@ import com.bird.dao.IStaffDao;
 import com.bird.entity.user.Staff;
 import com.bird.entity.vo.LoginVo;
 import com.bird.entity.vo.RegisterVo;
+import com.bird.feign.ICartFeign;
 import com.bird.service.IStaffService;
 import com.bird.utils.BCrypt;
 import io.lettuce.core.ScriptOutputType;
@@ -28,6 +29,8 @@ public class StaffService implements IStaffService {
     private IStaffDao staffDao;
     @Resource
     private SmsComponent smsComponent;
+    @Resource
+    private ICartFeign cartFeign;
 
     /**
      * @Author lipu
@@ -67,7 +70,13 @@ public class StaffService implements IStaffService {
             String password = BCrypt.hashpw(staff.getPassword(), BCrypt.gensalt());
             staff.setPassword(password);
             staffDao.insert(staff);
-            return true;
+            //初始化购物车信息 远程调用
+            Boolean result = cartFeign.initCart(staff.getId());
+            if (result){
+                return true;
+            }else {
+                return false;
+            }
         }
         return false;
     }
