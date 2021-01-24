@@ -145,4 +145,15 @@ public class SkuService implements ISkuService {
         allOf.get();
         return mainTaskOne.get();
     }
+
+    /**
+     * @Author lipu
+     * @Date 2021/1/24 13:44
+     * @Description 批量查询商品信息
+     */
+    @Override
+    public List<Sku> findBatch(List<Long> idList) {
+        List<Sku> skuList = skuDao.selectBatchIds(idList);
+        return skuList;
+    }
 }

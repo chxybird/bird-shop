@@ -3,7 +3,7 @@ spring:
     name: bird-order
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${virtual.machine.ip}:3306/bird_db_product?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://${virtual.machine.ip}:3306/bird_db_order?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
     username: root
     password: root
   redis:

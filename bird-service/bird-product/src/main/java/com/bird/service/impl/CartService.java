@@ -83,4 +83,14 @@ public class CartService implements ICartService {
         //清空购物项目
         cartItemDao.delete(new QueryWrapper<CartItem>().eq("cart_id",cart.getId()));
     }
+
+    /**
+     * @Author qgr
+     * @Date 2021/1/22 15:37
+     * @Description 更新购物车信息
+     */
+    @Override
+    public void update(Cart cart) {
+
+    }
 }

@@ -78,4 +78,16 @@ public class SkuController {
         Sku sku = skuService.details(id);
         return new CommonResult<Sku>(CommonStatus.SUCCESS,sku);
     }
+
+    /**
+     * @Author lipu
+     * @Date 2021/1/24 13:42
+     * @Description 批量商品查询
+     */
+    @GetMapping("/findBatch")
+    @ApiOperation("批量查询")
+    public CommonResult findBatch(@RequestParam("idList") List<Long> idList){
+        List<Sku> skuList = skuService.findBatch(idList);
+        return new CommonResult(CommonStatus.SUCCESS,skuList);
+    }
 }

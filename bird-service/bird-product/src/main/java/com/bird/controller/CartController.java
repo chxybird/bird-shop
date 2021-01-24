@@ -70,15 +70,16 @@ public class CartController {
     }
 
     /**
-     * @Author lipu
+     * @Author qgr
      * @Date 2021/1/21 18:59
      * @Description 购物车更新
      */
     @PostMapping("/update")
     @ApiOperation("更新购物车")
-    public CommonResult update(@RequestParam Long cartId,
-                            @RequestParam Long cartItemId,
-                            @RequestParam Integer count){
+    public CommonResult update(@RequestHeader("Authorization")String token,@RequestBody Cart cart){
+        //获取用户认证信息
+        Long staffId = JwtUtils.getStaffInfo(token);
+        //TODO 更新购物车信息
         return null;
     }
 

@@ -21,4 +21,6 @@ public interface ISkuService {
 
     Sku details(Long id) throws Exception;
 
+    List<Sku> findBatch(List<Long> idList);
+
 }

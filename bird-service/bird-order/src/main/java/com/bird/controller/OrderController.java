@@ -1,13 +1,13 @@
 package com.bird.controller;
 
 import com.bird.common.CommonResult;
-import com.bird.feign.ICategoryFeign;
+import com.bird.common.CommonStatus;
+import com.bird.entity.vo.OrderCommitVo;
+import com.bird.service.IOrderService;
+import com.bird.utils.JwtUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -20,26 +20,20 @@ import javax.annotation.Resource;
 @RequestMapping("/order")
 @Api(tags = "订单模块")
 public class OrderController {
-
-    public static String BIRD_PRODUCT="http://bird-product";
-
     @Resource
-    private ICategoryFeign categoryFeign;
-    @Resource
-    private RestTemplate restTemplate;
+    private IOrderService orderService;
 
     /**
      * @Author lipu
-     * @Date 2020/10/14 9:52
-     * @Description 测试分类远程调用
+     * @Date 2021/1/23 21:37
+     * @Description 订单提交
      */
-    @ApiOperation("远程调用测试分类")
-    @GetMapping("/findCategory")
-    public String findCategory(){
-        //Ribbon测试
-        String commonResult = restTemplate.getForObject(BIRD_PRODUCT + "/category/find", String.class);
-        //feign测试
-//        CommonResult<Integer> commonResult = categoryFeign.find();
-        return commonResult;
+    @PostMapping("/commit")
+    @ApiOperation("提交订单")
+    public CommonResult commit(@RequestHeader("Authorization")String token,@RequestBody OrderCommitVo orderCommitVo){
+        Long staffId = JwtUtils.getStaffInfo(token);
+        orderCommitVo.setStaffId(staffId);
+        orderService.commit(orderCommitVo);
+        return new CommonResult(CommonStatus.SUCCESS,"提交成功");
     }
 }

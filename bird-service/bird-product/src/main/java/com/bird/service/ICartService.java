@@ -17,4 +17,6 @@ public interface ICartService {
 
     void delete(Long staffId);
 
+    void update(Cart cart);
+
 }
