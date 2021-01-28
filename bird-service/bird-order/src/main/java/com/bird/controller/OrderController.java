@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.UUID;
 
 /**
  * @Author lipu
@@ -36,4 +37,18 @@ public class OrderController {
         orderService.commit(orderCommitVo);
         return new CommonResult(CommonStatus.SUCCESS,"提交成功");
     }
+
+    /**
+     * @Author lipu
+     * @Date 2021/1/28 19:52
+     * @Description 获取幂等性校验token
+     */
+    @GetMapping("/initToken")
+    @ApiOperation("生成token")
+    public CommonResult initToken() {
+        String token = UUID.randomUUID().toString().replace("-", "");
+        return new CommonResult(CommonStatus.SUCCESS, token);
+    }
+
+
 }

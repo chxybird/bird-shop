@@ -66,5 +66,16 @@ public class WareController {
         return new CommonResult(CommonStatus.SUCCESS, wareList);
     }
 
+    /**
+     * @Author lipu
+     * @Date 2021/1/24 20:19
+     * @Description 批量查询商品库存信息
+     */
+    @GetMapping("/findSkuWare")
+    @ApiOperation("批量查询库存信息")
+    public CommonResult findSkuWare(List<Long> idList){
+        return null;
+    }
+
 
 }
